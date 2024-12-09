@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="shortcut icon" href="./images/favicon.ico"> -->
+    <!--request.open('GET', "https://api.jancodelookup.com/?appId=afdc78bd691b9d7a8ac65139e649b5cd&query=4909411084578", true);-->
+    <title>jancode</title>
+    <link rel="stylesheet" href="./jan.css">
+
+</head>
+
+<body>
+    <!--<form action="./test.html" method="post">--><!--データベースに値を渡すときに必要-->
+    <div class="page">
+        <div class="goods">
+            <div><img id='image'></div>
+            <div class="goodsname">
+                <div id="name" name="name">商品名</div>
+                <div id="result"><!--結果表示--></div><!--商品名が入る-->
+            </div>
+        </div>
+        <div id="kigen">賞味期限・消費期限</div>
+        <label class="date-edit"><input type="date" id="date" value="" name="deadline"></input></label>
+        <label><input type="checkbox" name="nasi" id="nasi">期限なし</label>
+        <p id="checkmessage" style="color: red;"></p>
+        <div class="tag">
+            <div>購入日</div>
+            <label class="date-edit"><input type="date" id="buydate" name="buydate" required></input></label>
+            <div>購入数</div>
+            <select id="su" name="su"><!--購入した個数-->
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+            </select>
+            <div>レシピ用名称</div>
+            <input type="text" id="recipe" name="recipename" value="" required><br>
+            <button id="button">登録</button>
+            <!--<input type="submit" value="登録" id="button"></input>--><!--データベースに値を渡すときに必要-->
+        </div>
+    </div>
+    </form>
+    <script src="./registration.js"></script>
+    <script src="./jan2.js"></script>
+</body>
+
+</html>
