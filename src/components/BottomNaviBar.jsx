@@ -54,7 +54,7 @@ export const BottomNaviBar = () => {
           <Link
             to="/scan"
             onClick={() => handleSelected('/scan')}
-            className={`inline-flex items-center justify-center flex-col size-20 font-medium rounded-full group focus:ring-4 focus:ring-blue-300 focus:outline-none dark:focus:ring-darkgreen ${
+            className={`inline-flex items-center justify-center flex-col size-20 font-medium rounded-full group focus:ring-4 focus:ring-darkgreen focus:outline-none dark:focus:ring-darkgreen ${
               selected === '/scan' ? 'bg-darkgreen ring-darkgreen ring-4 outline-none dark:ring-darkgreen' : 'bg-green hover:bg-darkgreen'
             }`}
           >
