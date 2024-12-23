@@ -1,0 +1,66 @@
+#result {
+    padding: 0.5em;
+    box-sizing: border-box;
+}
+
+#name {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#kigen {
+    margin-top: 40px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#date {
+    padding: 10px;
+    text-align: center;
+}
+
+#buydate {
+    padding: 10px;
+    text-align: center;
+}
+
+#button {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    width: 5em;
+    height: 2em;
+    font-size: 20px;
+    border: none;
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.3);
+    background-color: rgb(243, 203, 41);
+}
+
+#su {
+    width: 50px;
+    font-size: 16px;
+}
+
+.page {
+    position: relative;
+    top: 20px;
+    left: 20px;
+}
+
+
+.goodsname {
+    flex-direction: column;
+    margin-top: 100px;
+}
+
+.tag {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.date-edit {
+    position: relative;
+}
+
+@media (min-width: 414px) {}

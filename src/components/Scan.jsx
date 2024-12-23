@@ -1,8 +1,8 @@
 import "../output.css"
 import "../scan.css"
-import $ from 'jquery';
 import React, { useState } from 'react';
 import Quagga from 'quagga';
+import { createContext } from "react";
 export const Scan = () => {
 
   const [codes, setCodes] = useState([]);//jancode(20回分)が入る配列の宣言
@@ -24,7 +24,7 @@ export const Scan = () => {
           readers: ["ean_reader"],//eanコードはjanコードの海外での名称
         },
       },
-      (err) => {
+      (err) => {//quaggaが起動できない場合
         if (err) {
           console.error(err);
           return;
@@ -71,7 +71,8 @@ export const Scan = () => {
     console.log("ストップ");
     Quagga.stop();
   };
-
+  const hand = () => {
+  }
   return (
     <div>
       <div id="my_container">
@@ -83,7 +84,7 @@ export const Scan = () => {
           <div id="my_quagga"></div>
           <div class="hand">
             <div id="triangle"></div>
-            <import type="text">手入力する</import>
+            <button onClick={hand}>手入力する</button>
           </div>
           <button onClick={my_stop}>キャンセル</button>
         </div>

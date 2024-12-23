@@ -1,12 +1,13 @@
 import { BottomNaviBar } from "./components/BottomNaviBar";
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import {Home} from './components/Home';
-import {List} from './components/List';
-import {Scan} from './components/Scan';
-import {Recipes} from './components/Recipes';
-import {Settings} from './components/Settings';
-
+import { Home } from './components/Home';
+import { List } from './components/List';
+import { Scan } from './components/Scan';
+import { Recipes } from './components/Recipes';
+import { Settings } from './components/Settings';
+import { Scanfinish } from './components/Scanfinish';
+import { Hand } from './components/Hand';
 
 export const App = () => {
   return (
