@@ -34,6 +34,7 @@ export const Scan = () => {
       }
     );
 
+
     Quagga.onDetected((result) => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
