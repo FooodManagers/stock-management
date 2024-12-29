@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="shortcut icon" href="./images/favicon.ico"> -->
+    <title>QuaggaJS</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./custom.css">
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://unpkg.com/@ericblade/quagga2@1.7.4/dist/quagga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mtaketani113/jquery-barcode@master/jquery-barcode.js"></script>
+</head>
+
+<body>
+    <div id="my_container">
+        <div id="my_inner">
+            <div>バーコードを映してください</div>
+            <div>
+                <button id="my_start">スキャン</button>
+                <button id="my_stop">キャンセル</button>
+            </div>
+            <div id="my_quagga">
+            </div>
+            <div id="my_result">***</div>
+            <div id="my_barcode">
+                <div>***</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        console.log("main.js!!");
+        const codes = [];//取得したjancodeが入る配列
+        $(document).ready(() => {
+            console.log("Ready!!");
+        });
+
+        $("#my_start").click(() => {
+            console.log("Start!!");
+
+            // Quagga
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.getElementById("my_quagga"),//カメラ画面
+                    navigator: navigator.mediaDevices
+                        .getUserMedia({
+                            audio: false,
+                            constraints: {
+                                video: {
+                                    facingMode: "environment",
+                                },
+                            }
+                        })
+                },
+                decoder: {
+                    readers: ["ean_reader"]//バーコードの種類
+                }
+            }, err => {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("Initialization finished!!");
+                Quagga.start();//バーコード読み取り開始
+            });
+
+            Quagga.onProcessed(result => {
+                if (result == null) return;//バーコード未検出のとき
+                if (typeof (result) != "object") return;
+                if (result.boxes == undefined) return;
+                const ctx = Quagga.canvas.ctx.overlay;
+                const canvas = Quagga.canvas.dom.overlay;
+                ctx.clearRect(0, 0, parseInt(canvas.width), parseInt(canvas.height));
+                Quagga.ImageDebug.drawPath(result.box,
+                    { x: 0, y: 1 }, ctx, { color: "blue", lineWidth: 5 });
+            });
+
+            Quagga.onDetected(result => {//バーコードが検出されたとき
+                if (codes.length == 20) {//jancodeの値候補が10個になったら取得を中止
+                    Quagga.stop();
+                    //各要素の出現回数をカウント
+                    const countMap = [];
+                    for (let i = 0; i < 20; i++) {
+                        countMap[codes[i]] = (countMap[codes[i]] || 0) + 1;
+                    }
+
+                    //最も多いjancodeを見つける
+                    let maxCount = 0;
+                    let adoptedValue;
+                    for (let code in countMap) {
+                        if (countMap[code] >= maxCount) {
+                            maxCount = countMap[code];
+                            adoptedValue = code;
+                        }
+                    }
+                    console.log(adoptedValue);
+                    //正しいjancodeの値をもって画面遷移
+                    window.location.href = `http://localhost/jancode/jan.html?value=${adoptedValue}`;
+
+                } else {
+                    //配列に取得コードを追加、重複を許す
+                    codes[codes.length] = result.codeResult.code;
+                }
+            });
+        });
+
+        $("#my_stop").click(() => {
+            console.log("Stop!!");
+            Quagga.stop();
+        });
+    </script>
+</body>
+
+</html>
