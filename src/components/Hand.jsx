@@ -1,7 +1,9 @@
 import "../output.css"
 import "../hand.css"
 import React, { useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 export const Hand = () => {
+    const navigete = useNavigate();
     const result = useRef();
     const su = useRef();
     const recipe = useRef();
@@ -29,39 +31,45 @@ export const Hand = () => {
             console.log(buydate.value);
         }
     }
+    const Scan = () => {
+        navigete('/scan');
+    }
     return (
         <div>
-            <h1>Hand</h1>
-            <div class="page">
-                <div class="goods">
-                    <div><img id='image'></img></div>
-                    <div class="goodsname">
-                        <div id="goodsname" name="name">商品名</div>
-                        <input type="text" ref={result} value="" size="20" placeholder="商品名を入力してください"></input>
-                    </div>
+            <div className="page">
+                <div className="goodsname">
+                    <div id="goodsName" name="name">商品名</div>
+                    <input type="text" ref={result} defaultValue="" size="20" placeholder="商品名を入力してください" />
                 </div>
-                <div id="kigen">賞味期限・消費期限</div>
-                <label class="date-edit"><input type="date" ref={date} value="" name="deadline"></input></label>
-                <label><input type="checkbox" name="nasi" ref={nasi}>期限なし</input></label>
-                <p id="checkmessage" style="color: red;"></p>
-                <div class="tag">
+                <div className="tag">
+                    <div id="kigen">賞味期限・消費期限</div>
+                    <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label>
+                    <label className="date-edit"><input type="checkbox" name="nasi" ref={nasi} />期限なし</label>
+                    <p id="checkmessage" style={{ color: "red" }}></p>
+
                     <div>購入日</div>
-                    <label class="date-edit"><input type="date" ref={buydate} name="buydate" required></input></label>
+                    <label className="date-edit"><input type="date" ref={buydate} name="buydate" required /></label>
                     <div>購入数</div>
                     <select ref={su} name="su">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
+                        <option defaultValue="1">1</option>
+                        <option defaultValue="2">2</option>
+                        <option defaultValue="3">3</option>
+                        <option defaultValue="4">4</option>
+                        <option defaultValue="5">5</option>
+                        <option defaultValue="6">6</option>
+                        <option defaultValue="7">7</option>
+                        <option defaultValue="8">8</option>
+                        <option defaultValue="9">9</option>
                     </select>
                     <div>レシピ用名称</div>
-                    <input type="text" ref={recipe} name="recipename" value="" required></input>
+                    <input type="text" ref={recipe} name="recipename" defaultValue="" required /><br></br>
+                </div>
+                <div className="finish">
                     <button onClick={finish}>登録</button>
+                </div>
+                <div className="scan">
+                    <div id="triangle"></div>
+                    <button onClick={Scan}>スキャン画面に戻る</button>
                 </div>
             </div>
         </div>

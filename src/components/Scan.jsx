@@ -3,8 +3,9 @@ import "../scan.css"
 import React, { useState } from 'react';
 import Quagga from 'quagga';
 import { createContext } from "react";
+import { useNavigate } from "react-router-dom";
 export const Scan = () => {
-
+  const navigete = useNavigate();
   const [codes, setCodes] = useState([]);//jancode(20回分)が入る配列の宣言
   const [detectedCode, setDetectedCode] = useState(null);
 
@@ -39,8 +40,8 @@ export const Scan = () => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
         const newCodes = [...prevCodes, code];
-        if (newCodes.length === 20) {
-          Quagga.stop();
+        if (newCodes.length === 20) {//jancode候補が20個集まったら
+          Quagga.stop();//カメラをストップする
           sendCodesToServer(newCodes);
         }
         return newCodes;
@@ -49,7 +50,7 @@ export const Scan = () => {
   };
 
   const sendCodesToServer = (codes) => {
-    fetch("http://localhost:3001/barcode", {
+    fetch("http://localhost:3001/jancode", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,8 @@ export const Scan = () => {
     console.log("ストップ");
     Quagga.stop();
   };
-  const hand = () => {
+  const Hand = () => {
+    navigete('/Hand');
   }
   return (
     <div>
@@ -83,9 +85,9 @@ export const Scan = () => {
             <button onClick={my_start}>スキャン</button>
           </div>
           <div id="my_quagga"></div>
-          <div class="hand">
+          <div className="hand">
             <div id="triangle"></div>
-            <button onClick={hand}>手入力する</button>
+            <button onClick={Hand}>手入力する</button>
           </div>
           <button onClick={my_stop}>キャンセル</button>
         </div>

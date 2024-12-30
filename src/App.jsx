@@ -6,8 +6,7 @@ import { List } from './components/List';
 import { Scan } from './components/Scan';
 import { Recipes } from './components/Recipes';
 import { Settings } from './components/Settings';
-import { Scanfinish } from './components/Scanfinish';
-import { Hand } from './components/Hand';
+import { Hand } from "./components/Hand";//Scan.jsxの読込み
 
 export const App = () => {
   return (
@@ -17,6 +16,7 @@ export const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/list" element={<List />} />
           <Route path="/scan" element={<Scan />} />
+          <Route path="/hand" element={<Hand />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>

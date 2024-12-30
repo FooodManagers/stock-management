@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //jancodeを受け取る
-app.post('/barcode', (req, res) => {
+app.post('/jancode', (req, res) => {
     const codes = req.body.codes;
 
     if (!Array.isArray(codes) || codes.length === 0) {

@@ -1,17 +1,23 @@
-#result {
-    padding: 0.5em;
-    box-sizing: border-box;
+.page {
+    width: 370px;
+    height: 488px;
+    flex-flow: wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 10px;
+    border: 2px solid black;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    text-align: center;
 }
 
 #name {
     margin-bottom: 20px;
-    font-weight: bold;
     font-size: 20px;
 }
 
 #kigen {
-    margin-top: 40px;
-    font-weight: bold;
     font-size: 20px;
 }
 
@@ -28,7 +34,6 @@
 #button {
     margin-top: 20px;
     margin-bottom: 20px;
-    font-weight: bold;
     width: 5em;
     height: 2em;
     font-size: 20px;
@@ -42,20 +47,45 @@
     font-size: 16px;
 }
 
-.page {
-    position: relative;
-    top: 20px;
-    left: 20px;
+.finish {
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 3px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    background-color: rgb(245, 190, 89);
 }
 
+.finish:hover {
+
+    box-shadow: 0px 6px 3px rgba(0, 0, 0, 0.5);
+    transform: scale(0.98);
+}
+
+.scan {
+    display: flex;
+    justify-content: center;
+}
+
+#triangle {
+    margin-left: -2px;
+    margin-top: 12px;
+    margin-right: 2px;
+    background-color: rgb(247, 206, 5);
+    height: calc(tan(60deg) * 15px / 2);
+    width: 15px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
 
 .goodsname {
     flex-direction: column;
-    margin-top: 100px;
+
 }
 
 .tag {
-    font-weight: bold;
+    margin-top: 10px;
     font-size: 20px;
 }
 
