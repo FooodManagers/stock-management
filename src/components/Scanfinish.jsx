@@ -32,35 +32,35 @@ export const Scanfinish = () => {
     return (
         <div>
             <h1>Scanfinish</h1>
-            <div class="page">
-                <div class="goods">
+            <div className="page">
+                <div className="goods">
                     <div><img id='image'></img></div>
-                    <div class="goodsname">
+                    <div className="goodsname">
                         <div id="goodsname" name="name">商品名</div>
                         <div ref={result}></div>
                     </div>
                 </div>
                 <div id="kigen">賞味期限・消費期限</div>
-                <label class="date-edit"><input type="date" ref={date} value="" name="deadline"></input></label>
-                <label><input type="checkbox" name="nasi" ref={nasi}>期限なし</input></label>
-                <p id="checkmessage" style="color: red;"></p>
-                <div class="tag">
+                <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label>
+                <label><input type="checkbox" name="nasi" ref={nasi} />期限なし</label>
+                <p id="checkmessage" style={{ color: "red" }}></p>
+                <div className="tag">
                     <div>購入日</div>
-                    <label class="date-edit"><input type="date" ref={buydate} name="buydate" required></input></label>
+                    <label className="date-edit"><input type="date" ref={buydate} name="buydate" required /></label>
                     <div>購入数</div>
                     <select ref={su} name="su">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
+                        <option defaultValue="1">1</option>
+                        <option defaultValue="2">2</option>
+                        <option defaultValue="3">3</option>
+                        <option defaultValue="4">4</option>
+                        <option defaultValue="5">5</option>
+                        <option defaultValue="6">6</option>
+                        <option defaultValue="7">7</option>
+                        <option defaultValue="8">8</option>
+                        <option defaultValue="9">9</option>
                     </select>
                     <div>レシピ用名称</div>
-                    <input type="text" ref={recipe} name="recipename" value="" required></input>
+                    <input type="text" ref={recipe} name="recipename" defaultValue="" required />
                     <button onClick={finish}>登録</button>
                 </div>
             </div>

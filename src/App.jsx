@@ -7,6 +7,7 @@ import { Scan } from './components/Scan';
 import { Recipes } from './components/Recipes';
 import { Settings } from './components/Settings';
 import { Hand } from "./components/Hand";//Scan.jsxの読込み
+import { Scanfinish } from "./components/Scanfinish";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
           <Route path="/list" element={<List />} />
           <Route path="/scan" element={<Scan />} />
           <Route path="/hand" element={<Hand />} />
+          <Route path="/scanfinish" element={<Scanfinish />} />
           <Route path="/recipes" element={<Recipes />} />
           <Route path="/settings" element={<Settings />} />
         </Routes>

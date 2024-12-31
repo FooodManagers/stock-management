@@ -62,6 +62,7 @@ export const Scan = () => {
         if (data.success) {
           console.log("janCode:", data.adoptedValue);
           setDetectedCode(data.adoptedValue);
+          navigete('/Scanfinish');
         } else {
           console.error("コード処理エラー");
         }
