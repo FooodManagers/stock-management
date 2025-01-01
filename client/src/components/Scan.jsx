@@ -1,10 +1,11 @@
 import "../output.css"
 import "../scan.css"
-import $ from 'jquery';
 import React, { useState } from 'react';
 import Quagga from 'quagga';
+import { createContext } from "react";
+import { useNavigate } from "react-router-dom";
 export const Scan = () => {
-
+  const navigete = useNavigate();
   const [codes, setCodes] = useState([]);//jancode(20回分)が入る配列の宣言
   const [detectedCode, setDetectedCode] = useState(null);
 
@@ -24,7 +25,7 @@ export const Scan = () => {
           readers: ["ean_reader"],//eanコードはjanコードの海外での名称
         },
       },
-      (err) => {
+      (err) => {//quaggaが起動できない場合
         if (err) {
           console.error(err);
           return;
@@ -34,12 +35,13 @@ export const Scan = () => {
       }
     );
 
+
     Quagga.onDetected((result) => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
         const newCodes = [...prevCodes, code];
-        if (newCodes.length === 20) {
-          Quagga.stop();
+        if (newCodes.length === 20) {//jancode候補が20個集まったら
+          Quagga.stop();//カメラをストップする
           sendCodesToServer(newCodes);
         }
         return newCodes;
@@ -48,7 +50,7 @@ export const Scan = () => {
   };
 
   const sendCodesToServer = (codes) => {
-    fetch("http://localhost:3001/barcode", {
+    fetch("http://localhost:3001/jancode", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,6 +62,7 @@ export const Scan = () => {
         if (data.success) {
           console.log("janCode:", data.adoptedValue);
           setDetectedCode(data.adoptedValue);
+          navigete('/Scanfinish');
         } else {
           console.error("コード処理エラー");
         }
@@ -71,7 +74,9 @@ export const Scan = () => {
     console.log("ストップ");
     Quagga.stop();
   };
-
+  const Hand = () => {
+    navigete('/Hand');
+  }
   return (
     <div>
       <div id="my_container">
@@ -81,9 +86,9 @@ export const Scan = () => {
             <button onClick={my_start}>スキャン</button>
           </div>
           <div id="my_quagga"></div>
-          <div class="hand">
+          <div className="hand">
             <div id="triangle"></div>
-            <import type="text">手入力する</import>
+            <button onClick={Hand}>手入力する</button>
           </div>
           <button onClick={my_stop}>キャンセル</button>
         </div>
