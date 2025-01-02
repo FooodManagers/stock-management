@@ -5,29 +5,28 @@ import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
 export const Scan = () => {
   const navigete = useNavigate();
-  const [codes, setCodes] = useState([]);//jancode(20回分)が入る配列の宣言
-  const [detectedCode, setDetectedCode] = useState(null); // 状態の初期化
+  const [codes, setCodes] = useState([]);/*jancode(20回分)が入る配列の宣言*/
+  const [detectedCode, setDetectedCode] = useState(null); /* 状態の初期化*/
   let jancode;
   const result = useRef();
   const Jancode = useRef();
-
-  const my_start = () => {//スキャンボタンを押したとき
+  const my_start = () => {/*スキャンボタンを押したとき*/
     console.log("scannerスタート");
     Quagga.init(
       {
-        inputStream: {//カメラ起動の準備
+        inputStream: {/*カメラ起動の準備*/
           name: "Live",
           type: "LiveStream",
-          target: document.querySelector("#my_quagga"),//HTMLの要素を取得
+          target: document.querySelector("#my_quagga"),/*HTMLの要素を取得*/
           constraints: {
-            video: { facingMode: "environment" },//リアカメラ
+            video: { facingMode: "environment" },/*リアカメラ*/
           },
         },
         decoder: {
-          readers: ["ean_reader"],//eanコードはjanコードの海外での名称
+          readers: ["ean_reader"],/*eanコードはjanコードの海外での名称*/
         },
       },
-      (err) => {//quaggaが起動できない場合
+      (err) => {/*quaggaが起動できない場合*/
         if (err) {
           console.error(err);
           return;
@@ -42,31 +41,31 @@ export const Scan = () => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
         const newCodes = [...prevCodes, code];
-        if (newCodes.length === 20) {//jancode候補が20個集まったら
-          Quagga.stop();//カメラをストップする
+        if (newCodes.length === 20) {/*jancode候補が20個集まったら*/
+          Quagga.stop();/*カメラをストップする*/
           sendCodesToServer(newCodes);
           console.log("janCode_check:", detectedCode);
           console.log("jancode:", jancode);
           sendJanToServer(4902105280102);
-          //sendJanToServer(detectedCode);
+          /*sendJanToServer(detectedCode);*/
         }
         return newCodes;
       });
     });
   };
 
-  const sendCodesToServer = (codes) => {
+  const sendCodesToServer = (codes) => {/*jancode20個から一番多いjancodeを見つけるためにcode.jsに送る*/
     fetch("http://localhost:3001/jancode", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ codes }),//javascriptオブジェクトをJSON形式の文字列に変換
+      body: JSON.stringify({ codes }),/*javascriptオブジェクトをJSON形式の文字列に変換*/
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
-          console.log("janCode:", data.adoptedValue);
+          console.log("janCode:", data.adoptedValue);/*jancodeが入る*/
           jancode = data.adoptedValue;
           setDetectedCode(data.adoptedValue);
         } else {
@@ -76,21 +75,18 @@ export const Scan = () => {
       .catch((err) => console.error(err));
   };
   const sendJanToServer = (input) => {
-    fetch("http://localhost:3002/jancodefinish", {
+    fetch("http://localhost:3002/jancodefinish", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ data: input }),//javascriptオブジェクトをJSON形式の文字列に変換
+      body: JSON.stringify({ data: input }),/*javascriptオブジェクトをJSON形式の文字列に変換*/
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) {
-          console.log("check0");
-          const { item } = result;
-          console.log("check1");
-          item.textContent = data.itemName;
-          console.log("check2");
+        if (data.succsess) {
+          console.log(data.succsess);
+          console.log(data.itemName);
           console.log("image:", data.itemImageUrl);
 
         } else {
@@ -100,7 +96,7 @@ export const Scan = () => {
       .catch((err) => console.error(err));
   };
 
-  const my_stop = () => {//キャンセルボタンを押したとき
+  const my_stop = () => {/*キャンセルボタンを押したとき*/
     console.log("ストップ");
     Quagga.stop();
   };
@@ -132,4 +128,4 @@ export const Scan = () => {
 
 };
 
-export default Scan;//他のファイルでこのファイルを読み込む(import)ときに好きな名前を付けられる
+export default Scan;/*他のファイルでこのファイルを読み込む(import)ときに好きな名前を付けられる*/
