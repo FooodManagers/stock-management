@@ -3,6 +3,8 @@ import React from "react";
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@nextui-org/react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import ItemList from "./ItemList";
+
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -45,6 +47,7 @@ export const Home = () => {
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>
       </Swiper>
+      <ItemList />
     </div>
     
   );
