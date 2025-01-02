@@ -44,9 +44,7 @@ export const Scan = () => {
         if (newCodes.length === 20) {/*jancode候補が20個集まったら*/
           Quagga.stop();/*カメラをストップする*/
           sendCodesToServer(newCodes);
-          console.log("janCode_check:", detectedCode);
-          console.log("jancode:", jancode);
-          sendJanToServer(4902105280102);
+          /*sendJanToServer(4902105280102);*/
           /*sendJanToServer(detectedCode);*/
         }
         return newCodes;
@@ -67,7 +65,9 @@ export const Scan = () => {
         if (data.success) {
           console.log("janCode:", data.adoptedValue);/*jancodeが入る*/
           jancode = data.adoptedValue;
+          console.log(jancode);
           setDetectedCode(data.adoptedValue);
+          sendJanToServer(jancode);
         } else {
           console.error("コード処理エラー");
         }
@@ -88,7 +88,6 @@ export const Scan = () => {
           console.log(data.succsess);
           console.log(data.itemName);
           console.log("image:", data.itemImageUrl);
-
         } else {
           console.error("コード処理エラー");
         }
