@@ -1,23 +1,25 @@
 import { BottomNaviBar } from "./components/BottomNaviBar";
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import {Home} from './components/Home';
-import {List} from './components/List';
-import {Scan} from './components/Scan';
-import {Recipes} from './components/Recipes';
-import {Settings} from './components/Settings';
-import React,{useEffect,useState} from 'react';
+import { Home } from './components/Home';
+import { List } from './components/List';
+import { Scan } from './components/Scan';
+import { Hand } from './components/Hand';
+import { Scanfinish } from './components/Scanfinish';
+import { Recipes } from './components/Recipes';
+import { Settings } from './components/Settings';
+import React, { useEffect, useState } from 'react';
 
 
 export const App = () => {
   const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        fetch('/api/message')
-            .then((response) => response.json())
-            .then((data) => setMessage(data.message))
-            .catch((error) => console.error('Error:', error));
-    }, []);
+  useEffect(() => {
+    fetch('/api/message')
+      .then((response) => response.json())
+      .then((data) => setMessage(data.message))
+      .catch((error) => console.error('Error:', error));
+  }, []);
   return (
     <>
       <div>
@@ -30,6 +32,8 @@ export const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/list" element={<List />} />
             <Route path="/scan" element={<Scan />} />
+            <Route path="/hand" element={<Hand />} />
+            <Route path="/scanfinish" element={<Scanfinish />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/settings" element={<Settings />} />
           </Routes>
