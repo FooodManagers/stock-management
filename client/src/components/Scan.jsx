@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
 export const Scan = () => {
-  const navigete = useNavigate();
+  const navigate = useNavigate();
   const [codes, setCodes] = useState([]);/*jancode(20回分)が入る配列の宣言*/
   const [detectedCode, setDetectedCode] = useState(null); /* 状態の初期化*/
   let jancode;
@@ -44,8 +44,6 @@ export const Scan = () => {
         if (newCodes.length === 20) {/*jancode候補が20個集まったら*/
           Quagga.stop();/*カメラをストップする*/
           sendCodesToServer(newCodes);
-          /*sendJanToServer(4902105280102);*/
-          /*sendJanToServer(detectedCode);*/
         }
         return newCodes;
       });
@@ -65,15 +63,15 @@ export const Scan = () => {
         if (data.success) {
           console.log("janCode:", data.adoptedValue);/*jancodeが入る*/
           jancode = data.adoptedValue;
-          console.log(jancode);
           setDetectedCode(data.adoptedValue);
-          sendJanToServer(jancode);
+          sendJanToServer(jancode);/*75行目のsendJanToServerの処理を行う*/
         } else {
           console.error("コード処理エラー");
         }
       })
       .catch((err) => console.error(err));
   };
+
   const sendJanToServer = (input) => {
     fetch("http://localhost:3002/jancodefinish", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
       method: "POST",
@@ -86,8 +84,12 @@ export const Scan = () => {
       .then((data) => {
         if (data.succsess) {
           console.log(data.succsess);
-          console.log(data.itemName);
-          console.log("image:", data.itemImageUrl);
+          console.log(data.itemName);/*商品の名前*/
+          console.log("image:", data.itemImageUrl);/*商品の画像URL*/
+          /*Scanfinish.jsxへのデータ渡しと画面遷移*/
+          const dataToSend = { itemName: data.itemName, itemImageUrl: data.itemImageUrl };/*Scanfinishへ渡すデータ*/
+          /*console.log(dataToSend);*/
+          navigate('/scanfinish', { state: dataToSend }); /*stateにデータを渡す*/
         } else {
           console.error("コード処理エラー");
         }
@@ -100,7 +102,7 @@ export const Scan = () => {
     Quagga.stop();
   };
   const Hand = () => {
-    navigete('/Hand');
+    navigate('/Hand');
   }
   return (
     <div>

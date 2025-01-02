@@ -1,6 +1,7 @@
 import "../output.css"
 import "../jan.css"
 import React, { useRef } from 'react';
+import { useLocation } from "react-router-dom";
 export const Scanfinish = () => {
     const result = useRef();
     const su = useRef();
@@ -9,6 +10,11 @@ export const Scanfinish = () => {
     let nasi = useRef();
     const buydate = useRef();
     nasi.checked = true;
+    const location = useLocation();
+    const receivedData = location.state; /* Scan.jsxから渡されたデータを取得*/
+    const itemData = JSON.parse(JSON.stringify(receivedData)); /* Scan.jsxから渡されたデータをJSON化して読込み*/
+    console.log(itemData.itemName); /*スキャンした商品名*/
+    console.log(itemData.itemImageUrl); /*スキャンした商品イメージのURL*/
     const finish = () => {
         let Nasi = nasi.current;
         if (Nasi.checked) {
@@ -34,10 +40,10 @@ export const Scanfinish = () => {
             <h1>Scanfinish</h1>
             <div className="page">
                 <div className="goods">
-                    <div><img id='image'></img></div>
+                    <div><img id='image' src={`${itemData.itemImageUrl}`} alt=""></img></div>
                     <div className="goodsname">
                         <div id="goodsname" name="name">商品名</div>
-                        <div ref={result}></div>
+                        <div ref={result}>{itemData.itemName}</div>
                     </div>
                 </div>
                 <div id="kigen">賞味期限・消費期限</div>

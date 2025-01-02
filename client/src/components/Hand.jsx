@@ -3,7 +3,7 @@ import "../hand.css"
 import React, { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 export const Hand = () => {
-    const navigete = useNavigate();
+    const navigate = useNavigate();
     const result = useRef();
     const su = useRef();
     const recipe = useRef();
@@ -32,7 +32,7 @@ export const Hand = () => {
         }
     }
     const Scan = () => {
-        navigete('/scan');
+        navigate('/scan');
     }
     return (
         <div>
