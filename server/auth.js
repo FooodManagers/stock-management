@@ -100,4 +100,26 @@ router.post('/verifyToken', (req, res) => {
   }
 });
 
+// ユーザーのメールアドレスをもとにstockデータを取得するAPI
+router.get('/stock', async (req, res) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    const email = decoded.email;
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM stock WHERE mail = ?', [email]);
+    await connection.end();
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching stock data:', error);
+    res.status(500).json({ error: 'Failed to fetch stock data' });
+  }
+});
+
 module.exports = router;

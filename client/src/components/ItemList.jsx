@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import {Card, CardBody} from "@nextui-org/react";
+import "../output.css"
 
 const ItemList = () => {
   const [items, setItems] = useState([]);
@@ -8,8 +10,13 @@ const ItemList = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://localhost:5000/api/stock');
+        const response = await axios.get('http://localhost:5000/api/auth/stock', {
+          headers: {
+            'Authorization': token
+          }
+        });
         setItems(response.data);
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -29,21 +36,23 @@ const ItemList = () => {
       <h1>Item List</h1>
       <ul>
         {items.map((stock) => (
-          <li key={stock.stock}>{stock.buy_date}</li> // id, nameはテーブルのカラム名
+          <li key={stock.stock_id}>{stock.buy_date}</li>
         ))}
       </ul>
+      {items.map((stock) => (
       <Card>
         <CardBody>
-          {items.map((stock) => (
             <div key={stock.stock_id}>
-              <h2>{stock.buy_date}</h2>
-              <p>{stock.stock}</p>
-              <p>{stock.price}</p>
+              <h1>{stock.item_name}</h1>
+              <div className='flex gap-3'>
+                <h2>{stock.buy_date}</h2>
+                <p>{stock.expiration_date}</p>
+              </div>
               <p>{stock.quantity}</p>
             </div>
-          ))}
         </CardBody>
       </Card>
+      ))}
     </div>
   );
 };
