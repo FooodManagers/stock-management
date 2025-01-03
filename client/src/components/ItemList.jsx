@@ -34,11 +34,6 @@ const ItemList = () => {
   return (
     <div>
       <h1>Item List</h1>
-      <ul>
-        {items.map((stock) => (
-          <li key={stock.stock_id}>{stock.buy_date}</li>
-        ))}
-      </ul>
       {items.map((stock) => (
       <Card>
         <CardBody>

@@ -17,9 +17,9 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 // サンプル API エンドポイント
-app.get('/api/message', (req, res) => {
-    res.json({ message: 'Hello from the backend!' });
-});
+// app.get('/api/message', (req, res) => {
+//     res.json({ message: 'Hello from the backend!' });
+// });
 // /api/stock エンドポイントを追加
 app.get('/api/stock',async (req, res) => {
     try {

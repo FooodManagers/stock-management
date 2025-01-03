@@ -15,7 +15,6 @@ import 'swiper/css/scrollbar';
 export const Home = () => {
   return (
     <div>
-      <h1>Home</h1>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y]}
         spaceBetween={50}
