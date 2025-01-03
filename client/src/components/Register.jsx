@@ -1,11 +1,8 @@
-// src/components/LoginForm.jsx
 import { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import "../output.css";
 
-function Login() {
+function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,16 +11,15 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      await axios.post("http://localhost:5000/api/auth/register", {
         email,
         password,
       });
-      Cookies.set("token", response.data.token, { expires: 1 }); // JWTをCookieに保存
       setError("");
-      alert("ログイン成功!");
-      navigate("/"); // ホーム画面にリダイレクト
+      alert("ユーザー登録成功!");
+      navigate("/login"); // ログイン画面にリダイレクト
     } catch (err) {
-      setError("ログインに失敗しました。メールアドレスまたはパスワードを確認してください。");
+      setError("ユーザー登録に失敗しました。メールアドレスまたはパスワードを確認してください。");
     }
   };
 
@@ -33,7 +29,7 @@ function Login() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded shadow-md w-96"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">ユーザー登録</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="mb-4">
           <label className="block mb-1 font-medium">メールアドレス</label>
@@ -57,14 +53,7 @@ function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-brack py-2 rounded hover:bg-blue-600"
-        >
-          ログイン
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/register")} // 登録画面に遷移
-          className="w-full bg-gray-500 text-brack py-2 rounded hover:bg-gray-600 mt-4"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
         >
           登録
         </button>
@@ -73,4 +62,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

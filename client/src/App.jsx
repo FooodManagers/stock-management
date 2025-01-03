@@ -11,6 +11,7 @@ import { Scan } from "./components/Scan";
 import { Recipes } from "./components/Recipes";
 import { Settings } from "./components/Settings";
 import Login from "./components/Login";
+import Register from "./components/Register"; // ユーザー登録コンポーネントのインポート
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -73,6 +74,7 @@ const AppContent = () => {
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} /> {/* ユーザー登録ルートの追加 */}
       </Routes>
       {isAuthenticated && <BottomNaviBar />} {/* 認証されている場合のみ表示 */}
     </>
