@@ -6,6 +6,7 @@ import {List} from './components/List';
 import {Scan} from './components/Scan';
 import {Recipes} from './components/Recipes';
 import {Settings} from './components/Settings';
+import Login from './components/Login';
 import React,{useEffect,useState} from 'react';
 
 
@@ -32,6 +33,7 @@ export const App = () => {
             <Route path="/scan" element={<Scan />} />
             <Route path="/recipes" element={<Recipes />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
           <BottomNaviBar />
         </div>
