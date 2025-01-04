@@ -26,10 +26,14 @@ app.post('/jancodefinish', async (req, res) => {
         console.log("データ");
         const product = await result.product[0];
         console.log("product.itemName", product.itemName);
+        console.log("product.brandName", product.brandName);
+        console.log("product.makerName", product.makerName);
         console.log("product.itemImageUrl", product.itemImageUrl);
         res.json({
             succsess: true,
             itemName: product.itemName,
+            brandName: product.brandName,
+            makerName: product.makerName,
             itemImageUrl: product.itemImageUrl,
         });
         console.log("データ完");

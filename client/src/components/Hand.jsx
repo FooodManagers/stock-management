@@ -22,13 +22,12 @@ export const Hand = () => {
             let message = "「賞味期限・消費期限」と「期限なし」を同時選択することはできません"
             document.getElementById('checkmessage').innerHTML = message;
         } else {
-            console.log(result.textContent);//商品名取得
-            console.log(su.value);//select.value:個数取得
-            console.log(Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
-            console.log(recipe.value);
-            console.log(su.value);
-            console.log(date.value);
-            console.log(buydate.value);
+            console.log("商品名", result.current.value);//商品名取得
+            console.log("個数", su.current.value);//select.value:個数取得
+            console.log("期限なし", Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
+            console.log("レシピ名称", recipe.current.value);
+            console.log("賞味消費期限", date.current.value);
+            console.log("買った日", buydate.current.value);
         }
     }
     const Scan = () => {

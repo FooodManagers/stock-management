@@ -84,10 +84,12 @@ export const Scan = () => {
       .then((data) => {
         if (data.succsess) {
           console.log(data.succsess);
+          console.log(data.brandName);
+          console.log(data.makerName);
           console.log(data.itemName);/*商品の名前*/
           console.log("image:", data.itemImageUrl);/*商品の画像URL*/
           /*Scanfinish.jsxへのデータ渡しと画面遷移*/
-          const dataToSend = { itemName: data.itemName, itemImageUrl: data.itemImageUrl };/*Scanfinishへ渡すデータ*/
+          const dataToSend = { itemName: data.itemName, itemImageUrl: data.itemImageUrl, brandName: data.brandName, makerName: data.makerName };/*Scanfinishへ渡すデータ*/
           /*console.log(dataToSend);*/
           navigate('/scanfinish', { state: dataToSend }); /*stateにデータを渡す*/
         } else {
@@ -106,17 +108,13 @@ export const Scan = () => {
   }
   return (
     <div>
-      navigete('/Scanfinish');
       <div id="my_container">
         <div id="my_inner">
-          <input type="text" ref={result} defaultValue="" size="20" />
           <div>バーコードを映してください</div>
           <div>
             <button onClick={my_start}>スキャン</button>
           </div>
           <div id="my_quagga"></div>
-          <p>Detected Code: {detectedCode}</p>
-          <input ref={Jancode} defaultValue={4902105280102} />
           <div className="hand">
             <div id="triangle"></div>
             <button onClick={Hand}>手入力する</button>

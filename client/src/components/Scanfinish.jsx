@@ -26,13 +26,12 @@ export const Scanfinish = () => {
             let message = "「賞味期限・消費期限」と「期限なし」を同時選択することはできません"
             document.getElementById('checkmessage').innerHTML = message;
         } else {
-            console.log(result.textContent);//商品名取得
-            console.log(su.value);//select.value:個数取得
-            console.log(Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
-            console.log(recipe.value);
-            console.log(su.value);
-            console.log(date.value);
-            console.log(buydate.value);
+            console.log("商品名", result.current.textContent);//商品名取得
+            console.log("個数", su.current.value);//select.value:個数取得
+            console.log("期限なし", Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
+            console.log("レシピ用名称", recipe.current.value);
+            console.log("消費賞味期限", date.current.value);
+            console.log("買った日", buydate.current.value);
         }
     }
     return (
@@ -52,7 +51,7 @@ export const Scanfinish = () => {
                 <p id="checkmessage" style={{ color: "red" }}></p>
                 <div className="tag">
                     <div>購入日</div>
-                    <label className="date-edit"><input type="date" ref={buydate} name="buydate" required /></label>
+                    <label className="date-edit"><input type="date" ref={buydate} defaultValue="" name="buydate" required /></label>
                     <div>購入数</div>
                     <select ref={su} name="su">
                         <option defaultValue="1">1</option>
