@@ -2,7 +2,9 @@ import "../output.css"
 import "../jan.css"
 import React, { useRef } from 'react';
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export const Scanfinish = () => {
+    const navigate = useNavigate();
     const result = useRef();
     const su = useRef();
     const recipe = useRef();
@@ -32,8 +34,41 @@ export const Scanfinish = () => {
             console.log("レシピ用名称", recipe.current.value);
             console.log("消費賞味期限", date.current.value);
             console.log("買った日", buydate.current.value);
-        }
-    }
+            /*jandbへ渡すデータ*/
+            const dataToSend = {
+                itemName: itemData.itemName, itemImageUrl: itemData.itemImageUrl, brandName: itemData.brandName, makerName: itemData.makerName,
+                quantity: su.current.value, expiration_type: date.current.value, nasi: Nasi.checked, recipe_name:
+                    recipe.current.value, expiration_date: buydate.current.value
+            };
+            sendJanToServer(jancode);
+            /*jandbにデータを送る*/
+            const sendJanToServer = (input) => {
+                fetch("http://localhost:3002/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ data: input }),/*javascriptオブジェクトをJSON形式の文字列に変換*/
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.succsess) {
+                            console.log(data.succsess);
+                            console.log(data.brandName);
+                            console.log(data.makerName);
+                            console.log(data.itemName);/*商品の名前*/
+                            console.log("image:", data.itemImageUrl);/*商品の画像URL*/
+                            /*jandb.jsへのデータ渡しと画面遷移*/
+                            /*console.log(dataToSend);*/
+                        } else {
+                            console.error("コード処理エラー");
+                        }
+                    })
+                    .catch((err) => console.error(err));
+            };
+        };
+        navigate('/home'); /*stateにデータを渡す*/
+    };
     return (
         <div>
             <h1>Scanfinish</h1>
