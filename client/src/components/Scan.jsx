@@ -66,6 +66,7 @@ export const Scan = () => {
           setDetectedCode(data.adoptedValue);
           sendJanToServer(jancode);/*75行目のsendJanToServerの処理を行う*/
         } else {
+          alert('JANCODEが見つかりませんでした。\n「手入力する」を選択して登録してください。');
           console.error("コード処理エラー");
         }
       })

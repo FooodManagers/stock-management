@@ -1,7 +1,6 @@
 import "../output.css"
-import "../popup.css"
 import "../jan.css"
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 export const Scanfinish = () => {
@@ -12,6 +11,7 @@ export const Scanfinish = () => {
     const date = useRef();
     let nasi = useRef();
     const buydate = useRef();
+    const date_type = useRef();
     nasi.checked = true;
     const location = useLocation();
     const receivedData = location.state; /* Scan.jsxから渡されたデータを取得*/
@@ -22,6 +22,7 @@ export const Scanfinish = () => {
         let Nasi = nasi.current;
         if (Nasi.checked) {
             Nasi.checked = true;
+            date_type.current.value = "なし";
         } else {
             Nasi.checked = false;
         }
@@ -33,7 +34,7 @@ export const Scanfinish = () => {
             console.log("個数", su.current.value);//select.value:個数取得
             console.log("期限なし", Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
             console.log("レシピ用名称", recipe.current.value);
-            console.log("消費賞味期限", date.current.value);
+            console.log("期限", date.current.value);
             console.log("買った日", buydate.current.value);
             console.log("会社名", itemData.makerName);
             console.log("ブランド名", itemData.brandName);
@@ -41,13 +42,12 @@ export const Scanfinish = () => {
             /*jandbへ渡すデータ*/
             const dataToSend = {
                 jan_code: itemData.jancode, itemName: itemData.itemName, itemImageUrl: itemData.itemImageUrl, brandName: itemData.brandName, makerName: itemData.makerName,
-                quantity: su.current.value, expiration_type: date.current.value, nasi: Nasi.checked, recipe_name:
-                    recipe.current.value, expiration_date: buydate.current.value
+                quantity: su.current.value, expiration_date: date.current.value, expiration_type: date_type.current.value, nasi: Nasi.checked, recipe_name:
+                    recipe.current.value, buy_date: buydate.current.value
             };
             sendDBToServer(dataToSend);/*jandbにデータを送る*/
         };
-        // Popup();
-        navigate('/'); /*stateにデータを渡す*/
+        navigate('/'); /*homeに戻る*/
     };
 
     const sendDBToServer = (input) => {
@@ -75,19 +75,10 @@ export const Scanfinish = () => {
             .catch((err) => console.error(err));
     };
 
-    /*popup*/
-    // const Popup = () => {
-    //     const [isPopupVisible, setPopupvisible] = useState(false);
-    //     const togglePopup = () => {
-    //         setPopupvisible(!isPopupVisible);
-    //     };
-    // }
-
 
 
     return (
         <div>
-            <h1>Scanfinish</h1>
             <div className="page">
                 <div className="goods">
                     <div><img id='image' src={`${itemData.itemImageUrl}`} alt=""></img></div>
@@ -96,13 +87,21 @@ export const Scanfinish = () => {
                         <div ref={result}>{itemData.itemName}</div>
                     </div>
                 </div>
+                <div className="tag"></div>
                 <div id="kigen">賞味期限・消費期限</div>
-                <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label>
-                <label><input type="checkbox" name="nasi" ref={nasi} />期限なし</label>
+                <div id="kigen_type">
+                    <select ref={date_type} name="deadline">
+                        <option defaultValue="賞味期限">賞味期限</option>
+                        <option defaultValue="消費期限">消費期限</option>
+                    </select>
+                    <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label><br></br>
+                    <label><input type="checkbox" name="nasi" ref={nasi} />期限なし</label>
+                </div>
                 <p id="checkmessage" style={{ color: "red" }}></p>
                 <div className="tag">
-                    <div>購入日</div>
-                    <label className="date-edit"><input type="date" ref={buydate} defaultValue="" name="buydate" required /></label>
+                    <div className="display">
+                        <label>購入日<input type="date" ref={buydate} defaultValue="" name="buydate" required /></label>
+                    </div>
                     <div>購入数</div>
                     <select ref={su} name="su">
                         <option defaultValue="1">1</option>
@@ -116,8 +115,10 @@ export const Scanfinish = () => {
                         <option defaultValue="9">9</option>
                     </select>
                     <div>レシピ用名称</div>
-                    <input type="text" ref={recipe} name="recipename" defaultValue="" required />
-                    <button onClick={finish}>登録</button>
+                    <input type="text" ref={recipe} name="recipename" defaultValue="" placeholder="入力してください入力してください" required />
+                    <div className="finish">
+                        <button onClick={finish}>登録</button>
+                    </div>
                 </div>
             </div>
         </div >

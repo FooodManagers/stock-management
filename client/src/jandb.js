@@ -26,46 +26,51 @@ connection.connect((err) => {
     }
 });
 
-/*productのテーブル*/
-// app.get('/jandb', async (req, res) => {
-//     const getTasksQuery = 'SELECT * FROM product';
-//     connection.query(getTasksQuery, (err, results) => {
-//         if (err) {
-//             console.error("MYSQLエラー:", err);
-//             return res.status(500).json({ error: "タスクの取得に失敗しました。" });
-//         }
-//         res.status(200).json(results);
-//     });
-// });
-
-/*productのテーブルに追加する*/
+/*データベースにデータを追加する*/
 app.post('/jandb', (req, res) => {
     console.log('リクエスト受信: /jandb');
-    const {
-        jan_code,
-        itemName,
-        itemImageUrl,
-        brandName,
-        makerName
-    } = req.body.data;
 
-    // クエリ
+    /*productテーブルに登録するデータ*/
+    const { jan_code, itemName, itemImageUrl, brandName, makerName } = req.body.data;
+    /*productテーブルに登録するクエリ*/
     const insertQuery = `
-        INSERT INTO product (jan_code, itemName, itemImageUrl, brandName, makerName)
+        INSERT INTO product (jan_code, goods_name, image_url, brand_name, maker_name)
         VALUES (?, ?, ?, ?, ?)
-    `;
-
+        `;
+    /*productテーブルにデータを登録*/
     connection.query(
         insertQuery,
-        [jan_code, itemName, itemImageUrl, brandName, makerName],
+        [jan_code, itemName, itemImageUrl, brandName, makerName],/*VALUES(?,?,?,?,?)に入る値がこれ*/
         (err, results) => {
             if (err) {
                 console.error('データ登録エラー:', err);
                 res.status(500).json({ success: false, error: err.message });
-                return;
+            } else {
+                console.log('データ登録成功:', results);
+                res.status(201).json({ success: true, id: results.insertId });
             }
-            console.log('データ登録成功:', results);
-            res.status(201).json({ success: true, id: results.insertId });
+        }
+    );
+
+    /*stockテーブルに登録するデータ*/
+    const { quantity, expiration_date, expiration_type, nasi, recipe_name, buy_date } = req.body.data;
+    /*stockテーブルに登録するクエリ*/
+    const insertQuery2 = `
+        INSERT INTO stock (jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+    /*stockテーブルにデータを登録*/
+    connection.query(
+        insertQuery2,
+        [jan_code, itemName, recipe_name, expiration_date, expiration_type, nasi, buy_date, quantity],/*VALUES(?,?,?,?,?)に入る値がこれ*/
+        (err2, results2) => {
+            if (err2) {
+                console.error('データ登録エラー:', err2);
+                res.status(500).json({ success: false, error: err2.message });
+            } else {
+                console.log('データ登録成功:', results2);
+                res.status(201).json({ success: true, id: results2.insertId });
+            }
         }
     );
 });
