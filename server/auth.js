@@ -122,4 +122,29 @@ router.get('/stock', async (req, res) => {
   }
 });
 
+router.get('/recipeword', async (req, res) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    const email = decoded.email;
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(`
+      SELECT recipe_name FROM stock
+      WHERE mail = ? AND recipe_name IS NOT NULL
+      ORDER BY expiration_date ASC, stock_id ASC
+      LIMIT 1
+    `, [email]);
+    await connection.end();
+
+    res.json(rows[0] || {});
+  } catch (error) {
+    console.error('Error fetching recipe data:', error);
+    res.status(500).json({ error: 'Failed to fetch recipe data' });
+  }
+});
 module.exports = router;

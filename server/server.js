@@ -3,11 +3,13 @@ const cors = require('cors');
 const path = require('path');
 const stockList = require('./stockList');
 const auth = require('./auth');
+const recipe = require('./recipe');
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
 app.use('/api/auth', auth);
+app.use('/api/recipe', recipe);
 
 // ミドルウェア設定
 app.use(cors());
