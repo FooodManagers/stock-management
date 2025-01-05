@@ -84,12 +84,13 @@ export const Scan = () => {
       .then((data) => {
         if (data.succsess) {
           console.log(data.succsess);
-          console.log(data.brandName);
-          console.log(data.makerName);
+          console.log(data.brandName);/*ブランド名*/
+          console.log(data.makerName);/*会社名*/
+          console.log(data.jancode);/*jancode:*/
           console.log(data.itemName);/*商品の名前*/
           console.log("image:", data.itemImageUrl);/*商品の画像URL*/
           /*Scanfinish.jsxへのデータ渡しと画面遷移*/
-          const dataToSend = { itemName: data.itemName, itemImageUrl: data.itemImageUrl, brandName: data.brandName, makerName: data.makerName };/*Scanfinishへ渡すデータ*/
+          const dataToSend = { itemName: data.itemName, itemImageUrl: data.itemImageUrl, brandName: data.brandName, makerName: data.makerName, jancode: data.jancode };/*Scanfinishへ渡すデータ*/
           /*console.log(dataToSend);*/
           navigate('/scanfinish', { state: dataToSend }); /*stateにデータを渡す*/
         } else {
