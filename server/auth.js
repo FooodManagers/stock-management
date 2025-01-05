@@ -147,4 +147,66 @@ router.get('/recipeword', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch recipe data' });
   }
 });
+// jan_code: null,
+// item_name: itemNameRef.current.value,
+// quantity: quantityRef.current.value,
+// expiration_date: expirationDate,
+// expiration_type: expirationType,
+// has_expiration: hasExpiration,
+// recipe_name: recipeNameRef.current.value,
+// buy_date: buyDateRef.current.value
+router.post('/stockRegister', async (req, res) => {
+  /*stockテーブルに登録するデータ*/
+  const {jan_code,item_name, quantity, expiration_date, expiration_type, has_expiration,recipe_name, buy_date ,mail} = req.body.data;
+  /*stockテーブルに登録するクエリ*/
+  const insertQuery2 = `
+      INSERT INTO stock (jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity, mail)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+  /*stockテーブルにデータを登録*/
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [results] = await connection.execute(insertQuery2, [jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity, mail]);
+    await connection.end();
+
+    console.log('データ登録成功:', results);
+    res.status(201).json({ success: true, id: results.insertId });
+  } catch (err) {
+    console.error('データ登録エラー:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// メールアドレスを取得するエンドポイント
+router.get('/getEmail', async (req, res) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(400).json({ success: false, error: 'Token is required' });
+  }
+
+  try {
+    // トークンをデコードしてユーザー情報を取得
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.id;
+
+    const selectQuery = `
+      SELECT mail FROM users WHERE id = ?
+    `;
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(selectQuery, [userId]);
+    await connection.end();
+
+    if (rows.length > 0) {
+      res.status(200).json({ success: true, email: rows[0].email });
+    } else {
+      res.status(404).json({ success: false, error: 'User not found' });
+    }
+  } catch (err) {
+    console.error('データ取得エラー:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;

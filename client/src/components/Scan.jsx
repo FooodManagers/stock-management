@@ -3,6 +3,7 @@ import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
+import ManualInput from "./ManualInput";
 export const Scan = () => {
   const navigate = useNavigate();
   const [codes, setCodes] = useState([]);/*jancode(20回分)が入る配列の宣言*/
@@ -124,6 +125,7 @@ export const Scan = () => {
           <button onClick={my_stop}>キャンセル</button>
         </div>
       </div>
+      <ManualInput />{/*手入力画面を表示*/}
     </div>
   );
 

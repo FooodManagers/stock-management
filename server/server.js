@@ -4,12 +4,14 @@ const path = require('path');
 const stockList = require('./stockList');
 const auth = require('./auth');
 const recipe = require('./recipe');
+const jandb = require('./jandb');
 
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
 app.use('/api/auth', auth);
 app.use('/api/recipe', recipe);
+app.use('/api/jandb', jandb);
 
 // ミドルウェア設定
 app.use(cors());
