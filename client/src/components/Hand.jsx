@@ -11,29 +11,36 @@ export const Hand = () => {
     let nasi = useRef();
     const buydate = useRef();
     const date_type = useRef();
+    let kigen_Nasi = useRef();
     nasi.checked = true;
     const finish = () => {
         let Nasi = nasi.current;
+        let expiration_type = date_type.current.value;
         if (Nasi.checked) {
             Nasi.checked = true;
-            date_type.current.value = "なし";
+            kigen_Nasi = 1;
+            date.current.value = "1990-01-01";
+            expiration_type = "なし";
         } else {
             Nasi.checked = false;
+            kigen_Nasi = 0;
         }
-        if (date.value !== "" && Nasi.checked === true) {//「なし」のチェックボックスと消費期限が両方入力されているとき
+        if (date.current.value !== "1990-01-01" && Nasi.checked === true) {//「なし」のチェックボックスと消費期限が両方入力されているとき
+            console.log("ダメ");
             let message = "「賞味期限・消費期限」と「期限なし」を同時選択することはできません"
             document.getElementById('checkmessage').innerHTML = message;
         } else {
             console.log("商品名", result.current.value);//商品名取得
             console.log("個数", su.current.value);//select.value:個数取得
-            console.log("期限なし", Nasi.checked);//渡される値:チェックありtrueチェックなしfalse
+            console.log("期限なし", kigen_Nasi);//渡される値:チェックありtrueチェックなしfalse
             console.log("レシピ名称", recipe.current.value);
             console.log("賞味消費期限", date.current.value);
             console.log("買った日", buydate.current.value);
-            console.log("買った日", buydate.current.value);
+            console.log("賞味消費期限タイプ", expiration_type);
+
             /*jandbへ渡すデータ*/
             const dataToSend = {
-                itemName: result.current.value, quantity: su.current.value, expiration_date: date.current.value, expiration_type: date_type.current.value, nasi: Nasi.checked, recipe_name:
+                itemName: result.current.value, quantity: su.current.value, expiration_date: date.current.value, expiration_type: expiration_type, nasi: kigen_Nasi, recipe_name:
                     recipe.current.value, buy_date: buydate.current.value
             };
             sendDBToServer(dataToSend);/*jandbにデータを送る*/
@@ -78,7 +85,7 @@ export const Hand = () => {
                 <div id="kigen">賞味期限・消費期限</div>
                 <div id="kigen_type">
                     <select ref={date_type} name="deadline">
-                        <option defaultValue="賞味期限">賞味期限</option>
+                        <option defaultValue="消費期限">賞味期限</option>
                         <option defaultValue="消費期限">消費期限</option>
                     </select>
                     <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label>

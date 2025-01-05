@@ -27,7 +27,7 @@ connection.connect((err) => {
 });
 
 /*データベースにデータを追加する*/
-app.post('/jandb', (req, res) => {
+app.post('/jandb', (req) => {
     console.log('リクエスト受信: /jandb');
 
     /*productテーブルに登録するデータ*/
@@ -44,10 +44,10 @@ app.post('/jandb', (req, res) => {
         (err, results) => {
             if (err) {
                 console.error('データ登録エラー:', err);
-                res.status(500).json({ success: false, error: err.message });
+                //res.status(500).json({ success: false, error: err.message });
             } else {
                 console.log('データ登録成功:', results);
-                res.status(201).json({ success: true, id: results.insertId });
+                //res.status(201).json({ success: true, id: results.insertId });
             }
         }
     );
@@ -66,10 +66,10 @@ app.post('/jandb', (req, res) => {
         (err2, results2) => {
             if (err2) {
                 console.error('データ登録エラー:', err2);
-                res.status(500).json({ success: false, error: err2.message });
+                //res.status(500).json({ success: false, error: err2.message });
             } else {
                 console.log('データ登録成功:', results2);
-                res.status(201).json({ success: true, id: results2.insertId });
+                //res.status(201).json({ success: true, id: results2.insertId });
             }
         }
     );
