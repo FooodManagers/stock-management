@@ -1,6 +1,6 @@
 .page {
     width: 370px;
-    height: 588px;
+    height: 488px;
     flex-flow: wrap;
     justify-content: space-around;
     align-items: center;
@@ -15,9 +15,16 @@
 #name {
     margin-bottom: 20px;
     font-size: 20px;
+    font-weight: bold;
 }
 
 #kigen {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#kigen_type {
+    font-weight: bold;
     font-size: 20px;
 }
 

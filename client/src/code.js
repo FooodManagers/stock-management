@@ -1,4 +1,3 @@
-const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -6,8 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3001;
 
-//ミドルウェア
-app.use(cors());
+app.use(cors());//異なるオリジンから接続できるようにする
 app.use(bodyParser.json());
 
 //jancodeを受け取る

@@ -6,6 +6,8 @@
     "client": "npm start --prefix client",
     "server": "npm run dev --prefix server",
     "start": "concurrently \"npm run client\" \"npm run server\""
-}
-
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
 }
