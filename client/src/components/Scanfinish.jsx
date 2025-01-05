@@ -47,6 +47,7 @@ export const Scanfinish = () => {
             console.log("ブランド名", itemData.brandName);
             console.log("jancode", itemData.jancode);
             /*jandbへ渡すデータ*/
+            
             const dataToSend = {
                 jan_code: itemData.jancode, itemName: itemData.itemName, itemImageUrl: itemData.itemImageUrl, brandName: itemData.brandName, makerName: itemData.makerName,
                 quantity: su.current.value, expiration_date: date.current.value, expiration_type: expiration_type, nasi: kigen_Nasi, recipe_name:
@@ -58,7 +59,7 @@ export const Scanfinish = () => {
     };
 
     const sendDBToServer = (input) => {
-        fetch("http://localhost:3003/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+        fetch("http://localhost:5000/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
