@@ -15,12 +15,17 @@ import Register from "./components/Register"; // ユーザー登録コンポー�
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { Hand } from './components/Hand';
+import { Scanfinish } from './components/Scanfinish';
 
 const AppContent = () => {
   const [message, setMessage] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true); // ローディング状態を追加
   const navigate = useNavigate();
+
+
+
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -71,6 +76,8 @@ const AppContent = () => {
         <Route path="/" element={<Home />} />
         <Route path="/list" element={<List />} />
         <Route path="/scan" element={<Scan />} />
+        <Route path="/hand" element={<Hand />} />
+        <Route path="/scanfinish" element={<Scanfinish />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
