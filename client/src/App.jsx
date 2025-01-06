@@ -17,15 +17,13 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Hand } from './components/Hand';
 import { Scanfinish } from './components/Scanfinish';
+import  ManualInput from './components/ManualInput';
 
 const AppContent = () => {
   const [message, setMessage] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true); // ローディング状態を追加
   const navigate = useNavigate();
-
-
-
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -79,9 +77,11 @@ const AppContent = () => {
         <Route path="/hand" element={<Hand />} />
         <Route path="/scanfinish" element={<Scanfinish />} />
         <Route path="/recipes" element={<Recipes />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} /> {/* ユーザー登録ルートの追加 */}
+        <Route path="/manualinput" element={<ManualInput />} />
+
       </Routes>
       {isAuthenticated && <BottomNaviBar />} {/* 認証されている場合のみ表示 */}
     </>

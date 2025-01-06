@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
+import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@nextui-org/react";
 import "../output.css";
 
-const ItemList = () => {
+const ItemList = ({ stocks, fetchStocks }) => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,12 +36,36 @@ const ItemList = () => {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-  
+
+  const onOpen = (stock) => {
+    setSelectedStock(stock);
+    setIsOpen(true);
+  };
+
+  const onClose = () => {
+    setIsOpen(false);
+    setSelectedStock(null);
+  };
+
+  const handleDelete = async () => {
+    try {
+      const token = Cookies.get('token');
+      await axios.delete(`http://localhost:5000/api/auth/stock/${selectedStock.stock_id}`, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      fetchStocks(); // ストックリストを再取得
+      onClose();
+    } catch (error) {
+      console.error('Error deleting stock:', error);
+    }
+  };
 
   return (
     <div>
       {items.map((stock) => (
-        <div>
+        <div key={stock.stock_id}>
           <Card className='bg-black shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>
@@ -55,7 +80,7 @@ const ItemList = () => {
                   <div className='flex gap-2'>
                     <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
                     <div className='flex justify-end w-full'>
-                      <Button auto size='small' onPress={onOpen}>編集</Button>
+                      <Button auto size='small' onPress={() => onOpen(stock)}>編集</Button>
                     </div>
                   </div>
                 </div>
@@ -64,20 +89,20 @@ const ItemList = () => {
           <Spacer y={2} />
         </div>
       ))}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='center'>
+      <Modal isOpen={isOpen} onOpenChange={onClose} placement='center'>
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1"></ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">削除確認</ModalHeader>
               <ModalBody>
-                <p>Modal Content</p>
+                <p>本当に削除しますか？</p>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
-                  Close
+                  キャンセル
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Action
+                <Button color="primary" onPress={handleDelete}>
+                  削除
                 </Button>
               </ModalFooter>
             </>

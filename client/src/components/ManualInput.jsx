@@ -13,33 +13,36 @@ const ManualInput = () => {
   const nasiRef = useRef();
   const recipeNameRef = useRef();
   const buyDateRef = useRef();
-  const mailRef = useRef();
+  // const mailRef = useRef();
 
-  // const [mail, setMail] = useState([]);
+  const [mail, setMail] = useState([]);
 
-  // useEffect(() => {
-  //   const fetchMail = async () => {
-  //     try {
-  //       const response = await axios.get('http://localhost:5000/api/auth/getEmail',{
+  useEffect(() => {
+    const fetchMail = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/auth/getEmail',{
             
-  //           headers: {
-  //             'Authorization': Cookies.get('token')
-  //           }
-  //       });
-  //       setMail(response.data);
-  //     } catch (err) {
-  //       console.error('Error fetching data:', err);
-  //     }
-  //   };
+            headers: {
+              'Authorization': Cookies.get('token')
+            }
+        });
+        setMail(response.data);
+        console.log('メールアドレス:', response.data);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
 
-  //   fetchMail();
-  // }, []);
+    fetchMail();
+  }, []);
 
 
   const handleSubmit = async () => {
-    const hasExpiration = nasiRef.current.checked;
-    const expirationDate = hasExpiration ? expirationDateRef.current.value : "1990-01-01";
-    const expirationType = hasExpiration ? expirationTypeRef.current.value : "なし";
+    // const hasExpiration = nasiRef.current.checked;
+    // const expirationDate = hasExpiration ? expirationDateRef.current.value : "1990-01-01";
+    // const expirationType = hasExpiration ? expirationTypeRef.current.value : "なし";
+    const expirationDate = expirationDateRef.current.value;
+    const expirationType = expirationTypeRef.current.value;
 
     const dataToSend = {
       jan_code: null,
@@ -47,11 +50,12 @@ const ManualInput = () => {
       quantity: quantityRef.current.value,
       expiration_date: expirationDate,
       expiration_type: expirationType,
-      has_expiration: hasExpiration,
+      has_expiration: false,
       recipe_name: recipeNameRef.current.value,
       buy_date: buyDateRef.current.value,
-      mail: mailRef.current.value
+      mail: mail.email
     };
+    console.log('データ登録:', dataToSend);
 
     try {
       const response = await axios.post('http://localhost:5000/api/auth/stockRegister', { data: dataToSend });
@@ -79,21 +83,22 @@ const ManualInput = () => {
           <select ref={expirationTypeRef}>
             <option value="賞味期限">賞味期限</option>
             <option value="消費期限">消費期限</option>
+            <option value="なし">なし</option>
           </select>
         </label>
       </div>
-      <div>
+      {/* <div>
         <label>期限なし: <input type="checkbox" ref={nasiRef} /></label>
-      </div>
+      </div> */}
       <div>
         <label>レシピ名: <input type="text" ref={recipeNameRef} placeholder="レシピ名を入力してください" /></label>
       </div>
       <div>
         <label>購入日: <input type="date" ref={buyDateRef} /></label>
       </div>
-      <div>
+      {/* <div>
       <label>レシピ名: <input type="text" ref={mailRef} placeholder="メールアドレス" /></label>
-      </div>
+      </div> */}
       <button onClick={handleSubmit}>登録</button>
     </div>
   );
