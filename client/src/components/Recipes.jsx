@@ -22,7 +22,7 @@ export const Recipes = () => {
   };
 
   return (
-    <div>
+    <div style={{ position: 'relative', minHeight: '100vh' }}>
       <h1>Recipe Search</h1>
       <input
         type="text"
@@ -41,6 +41,11 @@ export const Recipes = () => {
           </li>
         ))}
       </ul>
+      <div style={{ position: 'absolute', bottom: 120, width: '100%', textAlign: 'center' }}>
+        <a href="https://webservice.rakuten.co.jp/" target="_blank" rel="noopener noreferrer">
+          <img src="https://webservice.rakuten.co.jp/img/credit/200709/credit_22121.gif" border="0" alt="Rakuten Web Service Center" title="Rakuten Web Service Center" width="221" height="21"/>
+        </a>
+      </div>
     </div>
   );
 };
