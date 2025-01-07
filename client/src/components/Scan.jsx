@@ -109,6 +109,12 @@ export const Scan = () => {
   const Hand = () => {
     navigate('/Hand');
   }
+  const ManualInput = () => {
+    navigate('/ManualInput');
+  }
+  const handleManualInput = () => {
+    navigate('/ManualInput');
+  };
   return (
     <div>
       <div id="my_container">
@@ -120,12 +126,12 @@ export const Scan = () => {
           <div id="my_quagga"></div>
           <div className="hand">
             <div id="triangle"></div>
-            <button onClick={Hand}>手入力する</button>
+            <button onClick={handleManualInput}>手入力する</button>
           </div>
           <button onClick={my_stop}>キャンセル</button>
         </div>
       </div>
-      <ManualInput />{/*手入力画面を表示*/}
+      {/* <ManualInput />手入力画面を表示 */}
     </div>
   );
 

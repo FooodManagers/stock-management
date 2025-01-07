@@ -125,6 +125,10 @@ export const HomeRecipe = () => {
                     width={270}
                   />
                 </CardBody>
+                <Divider />
+                <CardFooter>
+                  <Link href={recipe.recipeUrl} target="_blank" rel="noopener noreferrer">レシピを見る</Link>
+                </CardFooter>
               </Card>
             </div>
           </SwiperSlide>

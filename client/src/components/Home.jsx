@@ -18,6 +18,7 @@ export const Home = () => {
     <div>
       <HomeRecipe />
       <ItemList />
+      <div style={{ height: '110px' }} />
     </div>
     
   );
