@@ -3,7 +3,7 @@ import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
-import ManualInput from "./ManualInput";
+
 export const Scan = () => {
   const navigate = useNavigate();
   const [codes, setCodes] = useState([]);/*jancode(20回分)が入る配列の宣言*/
@@ -45,6 +45,7 @@ export const Scan = () => {
         if (newCodes.length === 20) {/*jancode候補が20個集まったら*/
           Quagga.stop();/*カメラをストップする*/
           sendCodesToServer(newCodes);
+          console.log("codes:", newCodes);
         }
         return newCodes;
       });
@@ -52,7 +53,8 @@ export const Scan = () => {
   };
 
   const sendCodesToServer = (codes) => {/*jancode20個から一番多いjancodeを見つけるためにcode.jsに送る*/
-    fetch("http://localhost:3001/jancode", {
+    console.log("sendCodes:", codes);
+    fetch("http://localhost:5000/api/code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +77,7 @@ export const Scan = () => {
   };
 
   const sendJanToServer = (input) => {
-    fetch("http://localhost:3002/jancodefinish", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+    fetch("http://localhost:5000/api/jan", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
       method: "POST",
       headers: {
         "Content-Type": "application/json",
