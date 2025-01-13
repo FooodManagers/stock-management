@@ -37,7 +37,7 @@ export const Scan = () => {
       }
     );
 
-
+    // バーコードが読み取られたときの処理
     Quagga.onDetected((result) => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
@@ -119,20 +119,15 @@ export const Scan = () => {
   };
   return (
     <div>
-      <div id="my_container">
-        <div id="my_inner">
-          <div>バーコードを映してください</div>
-          <div>
+      <div className="w-max h-max justify-center mx-auto mt-2 bg-gray-100 shadow-md  rounded-md">
+          <div className="text-center text-3xl p-3">バーコードを映してください</div>
+          <div className="m-2" id="my_quagga"/>
+          <div className="flex justify-center">
             <button onClick={my_start}>スキャン</button>
+            <button onClick={my_stop}>キャンセル</button>
           </div>
-          <div id="my_quagga"></div>
-          <div className="hand">
-            <div id="triangle"></div>
-            <button onClick={handleManualInput}>手入力する</button>
-          </div>
-          <button onClick={my_stop}>キャンセル</button>
-        </div>
       </div>
+      <button onClick={handleManualInput} className="hand">手入力する</button>
       {/* <ManualInput />手入力画面を表示 */}
     </div>
   );
