@@ -1,15 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
+const router = express.Router();
 
-const app = express();
-const PORT = 3001;
-
-app.use(cors());//異なるオリジンから接続できるようにする
-app.use(bodyParser.json());
+router.use(bodyParser.json());
 
 //jancodeを受け取る
-app.post('/jancode', (req, res) => {
+router.post('/', (req, res) => {
     const codes = req.body.codes;
 
     if (!Array.isArray(codes) || codes.length === 0) {
@@ -35,7 +31,4 @@ app.post('/jancode', (req, res) => {
     res.json({ success: true, adoptedValue });
 });
 
-//サーバ起動
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+module.exports = router;

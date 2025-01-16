@@ -3,6 +3,9 @@ import "../jan.css"
 import React, { useRef } from 'react';
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
 export const Scanfinish = () => {
     const navigate = useNavigate();
     const result = useRef();
@@ -19,6 +22,27 @@ export const Scanfinish = () => {
     const itemData = JSON.parse(JSON.stringify(receivedData)); /* Scan.jsxから渡されたデータをJSON化して読込み*/
     console.log(itemData.itemName); /*スキャンした商品名*/
     console.log(itemData.itemImageUrl); /*スキャンした商品イメージのURL*/
+
+    const [mail, setMail] = useState([]);
+
+  useEffect(() => {
+    const fetchMail = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/auth/getEmail',{
+            
+            headers: {
+              'Authorization': Cookies.get('token')
+            }
+        });
+        setMail(response.data);
+        console.log('メールアドレス:', response.data);
+      } catch (err) {
+        console.error('Error fetching data:', err);
+      }
+    };
+
+fetchMail();
+}, []);
     const finish = () => {
         let Nasi = nasi.current;
         let expiration_type = date_type.current.value;
@@ -51,7 +75,7 @@ export const Scanfinish = () => {
             const dataToSend = {
                 jan_code: itemData.jancode, itemName: itemData.itemName, itemImageUrl: itemData.itemImageUrl, brandName: itemData.brandName, makerName: itemData.makerName,
                 quantity: su.current.value, expiration_date: date.current.value, expiration_type: expiration_type, nasi: kigen_Nasi, recipe_name:
-                    recipe.current.value, buy_date: buydate.current.value
+                    recipe.current.value, buy_date: buydate.current.value, mail: mail.email
             };
             sendDBToServer(dataToSend);/*jandbにデータを送る*/
         };
@@ -59,7 +83,7 @@ export const Scanfinish = () => {
     };
 
     const sendDBToServer = (input) => {
-        fetch("http://localhost:5000/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+        fetch("http://localhost:5000/api/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -3,7 +3,8 @@ import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
-import ManualInput from "./ManualInput";
+import { Button } from "@nextui-org/react";
+
 export const Scan = () => {
   const navigate = useNavigate();
   const [codes, setCodes] = useState([]);/*jancode(20回分)が入る配列の宣言*/
@@ -37,7 +38,7 @@ export const Scan = () => {
       }
     );
 
-
+    // バーコードが読み取られたときの処理
     Quagga.onDetected((result) => {
       const code = result.codeResult.code;
       setCodes((prevCodes) => {
@@ -45,6 +46,7 @@ export const Scan = () => {
         if (newCodes.length === 20) {/*jancode候補が20個集まったら*/
           Quagga.stop();/*カメラをストップする*/
           sendCodesToServer(newCodes);
+          console.log("codes:", newCodes);
         }
         return newCodes;
       });
@@ -52,7 +54,8 @@ export const Scan = () => {
   };
 
   const sendCodesToServer = (codes) => {/*jancode20個から一番多いjancodeを見つけるためにcode.jsに送る*/
-    fetch("http://localhost:3001/jancode", {
+    console.log("sendCodes:", codes);
+    fetch("http://localhost:5000/api/code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,7 +78,7 @@ export const Scan = () => {
   };
 
   const sendJanToServer = (input) => {
-    fetch("http://localhost:3002/jancodefinish", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+    fetch("http://localhost:5000/api/jan", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -117,20 +120,15 @@ export const Scan = () => {
   };
   return (
     <div>
-      <div id="my_container">
-        <div id="my_inner">
-          <div>バーコードを映してください</div>
-          <div>
-            <button onClick={my_start}>スキャン</button>
+      <div className="w-max h-max justify-center mx-auto mt-2 bg-gray-100 shadow-md  rounded-md">
+          <div className="text-center text-3xl p-3">バーコードを映してください</div>
+          <div className="m-2" id="my_quagga"/>
+          <div className="flex justify-center pt-3 pb-3">
+            <Button color="success"onPress={my_start} className="pr-3 mx-auto">スキャン</Button>
+            <Button color="default" onPress={my_stop} className="pl-3 mx-auto">キャンセル</Button>
           </div>
-          <div id="my_quagga"></div>
-          <div className="hand">
-            <div id="triangle"></div>
-            <button onClick={handleManualInput}>手入力する</button>
-          </div>
-          <button onClick={my_stop}>キャンセル</button>
-        </div>
       </div>
+      <button onClick={handleManualInput} className="hand">手入力する</button>
       {/* <ManualInput />手入力画面を表示 */}
     </div>
   );
