@@ -23,7 +23,7 @@ connection.connect((err) => {
 router.post('/', async (req, res) => {
   console.log('リクエスト受信: /jandb');
   /* productテーブルに登録するデータ */
-  const { jan_code, itemName, itemImageUrl, brandName, makerName } = req.body;
+  const { jan_code, itemName, itemImageUrl, brandName, makerName } = req.body.data;
 
   /* productテーブルに登録するクエリ */
   const insertQuery = `
@@ -31,18 +31,40 @@ router.post('/', async (req, res) => {
     VALUES (?, ?, ?, ?, ?)
   `;
 
-  try {
-    /* データベース接続を確立 */
-    const connection = await mysql.createConnection(dbConfig);
-    /* productテーブルにデータを登録 */
-    const [results] = await connection.execute(insertQuery, [jan_code, itemName, itemImageUrl, brandName, makerName]);
-    await connection.end();
+  connection.query(
+    insertQuery,
+    [jan_code, itemName, itemImageUrl, brandName, makerName],/*VALUES(?,?,?,?,?)に入る値がこれ*/
+    (err, results) => {
+        if (err) {
+            console.error('データ登録エラー:', err);
+            //res.status(500).json({ success: false, error: err.message });
+        } else {
+            console.log('データ登録成功:', results);
+            //res.status(201).json({ success: true, id: results.insertId });
+        }
+    }
+);
 
-    console.log('データ登録成功:', results);
-    res.status(201).json({ success: true, id: results.insertId });
-  } catch (err) {
-    console.error('データ登録エラー:', err);
-    res.status(500).json({ success: false, error: err.message });
-  }
+  /*stockテーブルに登録するデータ*/
+  const { quantity, expiration_date, expiration_type, nasi, recipe_name, buy_date, mail} = req.body.data;
+  /*stockテーブルに登録するクエリ*/
+  const insertQuery2 = `
+      INSERT INTO stock (jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity, mail)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+  /*stockテーブルにデータを登録*/
+  connection.query(
+      insertQuery2,
+      [jan_code, itemName, recipe_name, expiration_date, expiration_type, nasi, buy_date, quantity,mail],/*VALUES(?,?,?,?,?)に入る値がこれ*/
+      (err2, results2) => {
+          if (err2) {
+              console.error('データ登録エラー:', err2);
+              //res.status(500).json({ success: false, error: err2.message });
+          } else {
+              console.log('データ登録成功:', results2);
+              //res.status(201).json({ success: true, id: results2.insertId });
+          }
+      }
+  );
 });
 module.exports = router;
