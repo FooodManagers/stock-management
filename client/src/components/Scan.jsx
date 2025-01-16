@@ -130,7 +130,13 @@ export const Scan = () => {
       </div>
       <button onClick={handleManualInput} className="hand">手入力する</button>
       {/* <ManualInput />手入力画面を表示 */}
+      <div style={{ position: 'absolute', bottom: 120, width: '100%', textAlign: 'center' }}>
+        <a href="https://www.jancodelookup.com/" target="_blank" rel="noopener noreferrer">
+          Web Services by JANCODE LOOKUP
+        </a>
+      </div>
     </div>
+
   );
 
 };
