@@ -1,16 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const fetch = require('node-fetch');
+const router = express.Router();
 
-const app = express();
-const PORT = 3002;
-
-//ミドルウェア
-app.use(cors());
-app.use(express.json());
 
 //jancodeを受け取る
-app.post('/jancodefinish', async (req, res) => {
+router.post('/', async (req, res) => {
     console.log("jancodefinish0");
     const data = req.body.data;
     console.log("data=", data);
@@ -45,7 +39,5 @@ app.post('/jancodefinish', async (req, res) => {
         res.status(500).json({ success: false, error: error.message })
     }
 });
-//サーバ起動
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+
+module.exports = router;

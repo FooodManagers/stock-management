@@ -5,6 +5,8 @@ const stockList = require('./stockList');
 const auth = require('./auth');
 const recipe = require('./recipe');
 const jandb = require('./jandb');
+const code = require('./code');
+const jan = require('./jan');
 
 const app = express();
 app.use(express.json());
@@ -12,6 +14,8 @@ const PORT = process.env.PORT || 5000;
 app.use('/api/auth', auth);
 app.use('/api/recipe', recipe);
 app.use('/api/jandb', jandb);
+app.use('/api/code', code);
+app.use('/api/jan', jan);
 
 // ミドルウェア設定
 app.use(cors());
