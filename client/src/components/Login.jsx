@@ -5,7 +5,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "../output.css";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,6 +20,7 @@ function Login() {
       });
       Cookies.set("token", response.data.token, { expires: 1 }); // JWTをCookieに保存
       setError("");
+      setIsAuthenticated(true); // 認証状態を更新
       alert("ログイン成功!");
       navigate("/"); // ホーム画面にリダイレクト
     } catch (err) {
@@ -57,14 +58,14 @@ function Login() {
         </div>
         <button
           type="submit"
-          className="w-full bg-blue-500 text-brack py-2 rounded hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
         >
           ログイン
         </button>
         <button
           type="button"
           onClick={() => navigate("/register")} // 登録画面に遷移
-          className="w-full bg-gray-500 text-brack py-2 rounded hover:bg-gray-600 mt-4"
+          className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600 mt-4"
         >
           登録
         </button>
