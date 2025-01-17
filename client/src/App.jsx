@@ -17,7 +17,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Hand } from './components/Hand';
 import { Scanfinish } from './components/Scanfinish';
-import  ManualInput from './components/ManualInput';
+import ManualInput from './components/ManualInput';
 
 const AppContent = () => {
   const [message, setMessage] = useState("");
@@ -45,7 +45,6 @@ const AppContent = () => {
           setLoading(false); // ローディング完了
         });
     } else {
-      navigate("/login");
       setLoading(false); // ローディング完了
     }
   }, [navigate]);
@@ -61,27 +60,22 @@ const AppContent = () => {
     return <div>Loading...</div>; // ローディング中の表示
   }
 
-  if (!isAuthenticated) {
-    return <Login />; // 認証されていない場合はログイン画面を表示
-  }
-
   return (
     <>
       <div>
         <h1>{message}</h1>
       </div>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/list" element={<List />} />
-        <Route path="/scan" element={<Scan />} />
-        <Route path="/hand" element={<Hand />} />
-        <Route path="/scanfinish" element={<Scanfinish />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/settings" element={<Settings setIsAuthenticated={setIsAuthenticated} />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={isAuthenticated ? <Home /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/list" element={isAuthenticated ? <List /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/scan" element={isAuthenticated ? <Scan /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/hand" element={isAuthenticated ? <Hand /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/scanfinish" element={isAuthenticated ? <Scanfinish /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/recipes" element={isAuthenticated ? <Recipes /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/settings" element={isAuthenticated ? <Settings setIsAuthenticated={setIsAuthenticated} /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
+        <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/register" element={<Register />} /> {/* ユーザー登録ルートの追加 */}
-        <Route path="/manualinput" element={<ManualInput />} />
-
+        <Route path="/manualinput" element={isAuthenticated ? <ManualInput /> : <Login setIsAuthenticated={setIsAuthenticated} />} />
       </Routes>
       {isAuthenticated && <BottomNaviBar />} {/* 認証されている場合のみ表示 */}
     </>
