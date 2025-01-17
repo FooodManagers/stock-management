@@ -26,6 +26,7 @@ export const Scanfinish = () => {
     const [mail, setMail] = useState([]);
 
   useEffect(() => {
+    // メールアドレスを取得
     const fetchMail = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/auth/getEmail',{
