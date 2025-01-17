@@ -1,12 +1,12 @@
 import { createRoot } from 'react-dom/client';
 import { App } from './App';
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
 import React from "react";
 const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <NextUIProvider>
+    <HeroUIProvider>
       <App />
-    </NextUIProvider>
+    </HeroUIProvider>
   </React.StrictMode>
 );

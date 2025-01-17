@@ -3,7 +3,7 @@ import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
 import { useNavigate } from "react-router-dom";
-import { Button } from "@nextui-org/react";
+import { Button } from "@heroui/react";
 
 export const Scan = () => {
   const navigate = useNavigate();
