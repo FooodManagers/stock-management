@@ -109,12 +109,6 @@ export const Scan = () => {
     console.log("ストップ");
     Quagga.stop();
   };
-  const Hand = () => {
-    navigate('/Hand');
-  }
-  const ManualInput = () => {
-    navigate('/ManualInput');
-  }
   const handleManualInput = () => {
     navigate('/ManualInput');
   };
