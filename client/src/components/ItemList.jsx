@@ -87,9 +87,9 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   <div className='flex gap-2'>
                     <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
                     <div className='flex justify-end w-full'>
-                      <Button auto size='small' color='primary' variant='solid' onPress={() => onOpenEdit(stock)}>編集</Button>
+                      <Button auto size='small' color='success' variant='flat' onPress={() => onOpenEdit(stock)}>編集</Button>
                       <Spacer x={1} />
-                      <Button auto size='small' color='danger' variant='solid' onPress={() => onOpenDelete(stock)}>削除</Button>
+                      <Button auto size='small' color='danger' variant='flat' onPress={() => onOpenDelete(stock)}>削除</Button>
                     </div>
                   </div>
                 </div>
@@ -107,10 +107,10 @@ const ItemList = ({ stocks, fetchStocks }) => {
                 <p>本当に削除しますか？</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="default" variant="light" onPress={onClose}>
                   キャンセル
                 </Button>
-                <Button color="primary" onPress={handleDelete}>
+                <Button color="danger" onPress={handleDelete}>
                   削除
                 </Button>
               </ModalFooter>
@@ -127,10 +127,10 @@ const ItemList = ({ stocks, fetchStocks }) => {
                 <p>編集画面</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="default" variant="light" onPress={onClose}>
                   キャンセル
                 </Button>
-                <Button color="primary">
+                <Button color="success" onPress={onClose}>
                   編集
                 </Button>
               </ModalFooter>
