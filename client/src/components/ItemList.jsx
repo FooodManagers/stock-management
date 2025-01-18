@@ -7,7 +7,8 @@ import "../output.css";
 const ItemList = ({ stocks, fetchStocks }) => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
 
@@ -37,13 +38,19 @@ const ItemList = ({ stocks, fetchStocks }) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const onOpen = (stock) => {
+  const onOpenDelete = (stock) => {
     setSelectedStock(stock);
-    setIsOpen(true);
+    setIsOpenDelete(true);
+  };
+
+  const onOpenEdit = () => {
+    setIsOpenEdit(true);
+    setSelectedStock(null);
   };
 
   const onClose = () => {
-    setIsOpen(false);
+    setIsOpenDelete(false);
+    setIsOpenEdit(false);
     setSelectedStock(null);
   };
 
@@ -66,7 +73,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
     <div>
       {items.map((stock) => (
         <div key={stock.stock_id}>
-          <Card className='bg-black shadow bg-default-100' onPress={() => {console.log('pressed')}}>
+          <Card className='shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>
                   <h1 className='text-lg font-bold'>{stock.item_name}</h1>
@@ -80,7 +87,9 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   <div className='flex gap-2'>
                     <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
                     <div className='flex justify-end w-full'>
-                      <Button auto size='small' onPress={() => onOpen(stock)}>編集</Button>
+                      <Button auto size='small' color='primary' variant='solid' onPress={() => onOpenEdit(stock)}>編集</Button>
+                      <Spacer x={1} />
+                      <Button auto size='small' color='danger' variant='solid' onPress={() => onOpenDelete(stock)}>削除</Button>
                     </div>
                   </div>
                 </div>
@@ -89,7 +98,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
           <Spacer y={2} />
         </div>
       ))}
-      <Modal isOpen={isOpen} onOpenChange={onClose} placement='center'>
+      <Modal isOpen={isOpenDelete} onOpenChange={onClose} placement='center'>
         <ModalContent>
           {(onClose) => (
             <>
@@ -103,6 +112,26 @@ const ItemList = ({ stocks, fetchStocks }) => {
                 </Button>
                 <Button color="primary" onPress={handleDelete}>
                   削除
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpenEdit} onOpenChange={onClose} placement='center'>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">編集</ModalHeader>
+              <ModalBody>
+                <p>編集画面</p>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  キャンセル
+                </Button>
+                <Button color="primary">
+                  編集
                 </Button>
               </ModalFooter>
             </>
