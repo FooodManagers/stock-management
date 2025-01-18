@@ -9,6 +9,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [error, setError] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,9 +26,8 @@ const ItemList = ({ stocks, fetchStocks }) => {
         setError('Failed to fetch data.');
       }
     };
-
     fetchData();
-  }, []);
+  }, [reload]);
 
   if (error) {
     return <p>{error}</p>;
@@ -55,7 +55,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
           'Authorization': token
         }
       });
-      fetchStocks(); // ストックリストを再取得
+      setReload(!reload) // ストックリストを再取得
       onClose();
     } catch (error) {
       console.error('Error deleting stock:', error);
