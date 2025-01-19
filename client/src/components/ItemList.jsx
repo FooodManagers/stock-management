@@ -11,7 +11,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,15 +44,17 @@ const ItemList = ({ stocks, fetchStocks }) => {
     setIsOpenDelete(true);
   };
 
-  const onOpenEdit = (stock) => {
+  const onOpenEdit = async (stock) => {
     setIsOpenEdit(true);
     setSelectedStock(stock);
+    await getProduct(stock.jan_code)
   };
 
   const onClose = () => {
     setIsOpenDelete(false);
     setIsOpenEdit(false);
     setSelectedStock(null);
+    setProduct(null);
   };
 
   const handleDelete = async () => {
@@ -70,14 +72,15 @@ const ItemList = ({ stocks, fetchStocks }) => {
     }
   };
 
-  const getProduct = async () => {
+  const getProduct = async (jan_code) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/auth/product`, {
+      const response = await axios.get(`http://localhost:5000/api/auth/product`, {
         headers: {
-          'jan_code': selectedStock.jan_code
+          'jan_code': jan_code
         }
       });
-      setProduct(response.data);
+      setProduct(response.data[0]);
+      console.log(response.data[0]);
     } catch (error) {
       console.error('Error editing stock:', error);
     }
@@ -138,7 +141,13 @@ const ItemList = ({ stocks, fetchStocks }) => {
             <>
               <ModalHeader className="flex flex-col gap-1">編集</ModalHeader>
               <ModalBody>
-                <p>編集画面</p>
+              {product && (
+                  <div>
+                    <p>商品名: {product.goods_name}</p>
+                    <p>メーカー名: {product.maker_name}</p>
+                    <img src={product.image_url} alt={product.goods_name} />
+                  </div>
+                )}
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>
