@@ -11,6 +11,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
+  const [product, setProduct] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,14 +72,12 @@ const ItemList = ({ stocks, fetchStocks }) => {
 
   const getProduct = async () => {
     try {
-      const token = Cookies.get('token');
-      await axios.put(`http://localhost:5000/api/auth/product`, {
+      const response = await axios.put(`http://localhost:5000/api/auth/product`, {
         headers: {
           'jan_code': selectedStock.jan_code
         }
       });
-      setReload(!reload) // ストックリストを再取得
-      onClose();
+      setProduct(response.data);
     } catch (error) {
       console.error('Error editing stock:', error);
     }
