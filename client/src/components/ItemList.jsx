@@ -43,9 +43,9 @@ const ItemList = ({ stocks, fetchStocks }) => {
     setIsOpenDelete(true);
   };
 
-  const onOpenEdit = () => {
+  const onOpenEdit = (stock) => {
     setIsOpenEdit(true);
-    setSelectedStock(null);
+    setSelectedStock(stock);
   };
 
   const onClose = () => {
@@ -68,6 +68,21 @@ const ItemList = ({ stocks, fetchStocks }) => {
       console.error('Error deleting stock:', error);
     }
   };
+
+  const getProduct = async () => {
+    try {
+      const token = Cookies.get('token');
+      await axios.put(`http://localhost:5000/api/auth/product`, {
+        headers: {
+          'jan_code': selectedStock.jan_code
+        }
+      });
+      setReload(!reload) // ストックリストを再取得
+      onClose();
+    } catch (error) {
+      console.error('Error editing stock:', error);
+    }
+  }
 
   return (
     <div>
