@@ -121,6 +121,20 @@ router.get('/stock', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch stock data' });
   }
 });
+// jan_codeを基に商品情報を取得するAPI
+router.get('/product', async (req, res) => {
+  const jan_code = req.headers['jan_code'];
+  try {
+    const connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute('SELECT * FROM product WHERE jan_code = ?', [jan_code]);
+    await connection.end();
+
+    res.json(rows);
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    res.status(500).json({ error: 'Failed to fetch product data' });
+  }
+});
 
 router.get('/recipeword', async (req, res) => {
   const token = req.headers['authorization'];
@@ -230,5 +244,6 @@ router.delete('/stock/:id', async (req, res) => {
     res.status(500).json({ error: 'Failed to delete stock' });
   }
 });
+
 
 module.exports = router;

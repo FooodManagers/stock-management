@@ -7,8 +7,11 @@ import "../output.css";
 const ItemList = ({ stocks, fetchStocks }) => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
+  const [isOpenEdit, setIsOpenEdit] = useState(false);
   const [selectedStock, setSelectedStock] = useState(null);
+  const [reload, setReload] = useState(false);
+  const [product, setProduct] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,9 +28,8 @@ const ItemList = ({ stocks, fetchStocks }) => {
         setError('Failed to fetch data.');
       }
     };
-
     fetchData();
-  }, []);
+  }, [reload]);
 
   if (error) {
     return <p>{error}</p>;
@@ -37,14 +39,22 @@ const ItemList = ({ stocks, fetchStocks }) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const onOpen = (stock) => {
+  const onOpenDelete = (stock) => {
     setSelectedStock(stock);
-    setIsOpen(true);
+    setIsOpenDelete(true);
+  };
+
+  const onOpenEdit = async (stock) => {
+    setIsOpenEdit(true);
+    setSelectedStock(stock);
+    await getProduct(stock.jan_code)
   };
 
   const onClose = () => {
-    setIsOpen(false);
+    setIsOpenDelete(false);
+    setIsOpenEdit(false);
     setSelectedStock(null);
+    setProduct(null);
   };
 
   const handleDelete = async () => {
@@ -55,18 +65,32 @@ const ItemList = ({ stocks, fetchStocks }) => {
           'Authorization': token
         }
       });
-      fetchStocks(); // ストックリストを再取得
+      setReload(!reload) // ストックリストを再取得
       onClose();
     } catch (error) {
       console.error('Error deleting stock:', error);
     }
   };
 
+  const getProduct = async (jan_code) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/auth/product`, {
+        headers: {
+          'jan_code': jan_code
+        }
+      });
+      setProduct(response.data[0]);
+      console.log(response.data[0]);
+    } catch (error) {
+      console.error('Error editing stock:', error);
+    }
+  }
+
   return (
     <div>
       {items.map((stock) => (
         <div key={stock.stock_id}>
-          <Card className='bg-black shadow bg-default-100' onPress={() => {console.log('pressed')}}>
+          <Card className='shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>
                   <h1 className='text-lg font-bold'>{stock.item_name}</h1>
@@ -80,7 +104,9 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   <div className='flex gap-2'>
                     <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
                     <div className='flex justify-end w-full'>
-                      <Button auto size='small' onPress={() => onOpen(stock)}>編集</Button>
+                      <Button auto size='small' color='success' variant='flat' onPress={() => onOpenEdit(stock)}>編集</Button>
+                      <Spacer x={1} />
+                      <Button auto size='small' color='danger' variant='flat' onPress={() => onOpenDelete(stock)}>削除</Button>
                     </div>
                   </div>
                 </div>
@@ -89,7 +115,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
           <Spacer y={2} />
         </div>
       ))}
-      <Modal isOpen={isOpen} onOpenChange={onClose} placement='center'>
+      <Modal isOpen={isOpenDelete} onOpenChange={onClose} placement='center'>
         <ModalContent>
           {(onClose) => (
             <>
@@ -98,11 +124,37 @@ const ItemList = ({ stocks, fetchStocks }) => {
                 <p>本当に削除しますか？</p>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="default" variant="light" onPress={onClose}>
                   キャンセル
                 </Button>
-                <Button color="primary" onPress={handleDelete}>
+                <Button color="danger" onPress={handleDelete}>
                   削除
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      <Modal isOpen={isOpenEdit} onOpenChange={onClose} placement='center'>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">編集</ModalHeader>
+              <ModalBody>
+              {product && (
+                  <div>
+                    <p>商品名: {product.goods_name}</p>
+                    <p>メーカー名: {product.maker_name}</p>
+                    <img src={product.image_url} alt={product.goods_name} />
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="default" variant="light" onPress={onClose}>
+                  キャンセル
+                </Button>
+                <Button color="success" onPress={onClose}>
+                  編集
                 </Button>
               </ModalFooter>
             </>

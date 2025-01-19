@@ -123,6 +123,7 @@ export const HomeRecipe = () => {
                     className="object-cover rounded-xl flex justify-center items-center"
                     src={recipe.foodImageUrl}
                     width={270}
+                    height={200}
                   />
                 </CardBody>
                 <Divider />
