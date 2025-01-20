@@ -37,7 +37,7 @@ function Login({ setIsAuthenticated }) {
           onSubmit={handleSubmit}
           // className="bg-white p-6 rounded shadow-md w-96"
         >
-          <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
+          <h2 className="text-2xl font-bold my-6 text-center">ログイン</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="mb-4">
             <Input
