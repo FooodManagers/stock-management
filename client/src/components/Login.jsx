@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "../output.css";
 import { Input, Button, Spacer, Link} from "@heroui/react";
+import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
@@ -31,54 +32,53 @@ function Login({ setIsAuthenticated }) {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <div className="mb-4">
-          <Input
-            label="メールアドレス"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            fullWidth
-            variant="bordered"
-            size="lg"
-          />
-        </div>
-        <Spacer y={4} />
-        <div className="mb-4">
-          <Input
-            label="パスワード"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            fullWidth
-            variant="bordered"
-            size="lg"
-          />
-        </div>
-        <Button
-          type="submit"
-          color="success"
-          className="text-white"
-          fullWidth
+      <Card className="w-96">
+        <form
+          onSubmit={handleSubmit}
+          // className="bg-white p-6 rounded shadow-md w-96"
         >
-          ログイン
-        </Button>
-        <Button
-          type="button"
-          color="secondary"
-          onPress={() => navigate("/register")} // 登録画面に遷移
-          fullWidth
-        >
-          登録
-        </Button>
-      </form>
+          <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <div className="mb-4">
+            <Input
+              label="メールアドレス"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              fullWidth
+              variant="bordered"
+              size="md"
+              className="mx-auto w-80"
+            />
+          </div>
+          <Spacer y={4} />
+          <div className="mb-4">
+            <Input
+              label="パスワード"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              variant="bordered"
+              size="md"
+              className="mx-auto w-80"
+            />
+          </div>
+          <Button
+            type="submit"
+            color="success"
+            className="text-white"
+            fullWidth
+          >
+            ログイン
+          </Button>
+          <Link href="/register">
+            登録はこちら
+          </Link>
+        </form>
+      </Card>
     </div>
   );
 }
