@@ -39,7 +39,7 @@ function Login({ setIsAuthenticated }) {
         >
           <h2 className="text-2xl font-bold my-6 text-center">ログイン</h2>
           {error && <p className="text-red-500 mb-4">{error}</p>}
-          <div className="mb-4">
+          <div className="mb-6">
             <Input
               label="メールアドレス"
               type="email"
@@ -53,7 +53,7 @@ function Login({ setIsAuthenticated }) {
             />
           </div>
           <Spacer y={4} />
-          <div className="mb-4">
+          <div className="mb-6">
             <Input
               label="パスワード"
               type="password"
