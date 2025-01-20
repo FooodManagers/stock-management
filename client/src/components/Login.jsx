@@ -32,7 +32,7 @@ function Login({ setIsAuthenticated }) {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <Card className="w-96">
+      <Card className="w-96 h-96">
         <form
           onSubmit={handleSubmit}
           // className="bg-white p-6 rounded shadow-md w-96"
