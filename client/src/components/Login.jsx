@@ -4,6 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "../output.css";
+import { Input, Button, Spacer, Link} from "@heroui/react";
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
@@ -37,38 +38,46 @@ function Login({ setIsAuthenticated }) {
         <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="mb-4">
-          <label className="block mb-1 font-medium">メールアドレス</label>
-          <input
+          <Input
+            label="メールアドレス"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
+            fullWidth
+            variant="bordered"
+            size="lg"
           />
         </div>
+        <Spacer y={4} />
         <div className="mb-4">
-          <label className="block mb-1 font-medium">パスワード</label>
-          <input
+          <Input
+            label="パスワード"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
+            fullWidth
+            variant="bordered"
+            size="lg"
           />
         </div>
-        <button
+        <Button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          color="success"
+          className="text-white"
+          fullWidth
         >
           ログイン
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
-          onClick={() => navigate("/register")} // 登録画面に遷移
-          className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600 mt-4"
+          color="secondary"
+          onPress={() => navigate("/register")} // 登録画面に遷移
+          fullWidth
         >
           登録
-        </button>
+        </Button>
       </form>
     </div>
   );
