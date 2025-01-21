@@ -90,7 +90,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       await axios.put(`http://localhost:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
         item_name: formData.itemName,
         quantity: formData.quantity,
-        expiration_date: formData.expirationDate,
+        expiration_date: formatDate(formData.expirationDate),
         expiration_type: formData.expirationType,
         recipe_name: formData.recipe_name,
       }, {
@@ -98,8 +98,8 @@ const ItemList = ({ stocks, fetchStocks }) => {
           'Authorization': token
         }
       });
-      await fetchStocks(); // ストックリストを再取得
-      onClose(); // モーダルを閉じる
+      setReload(!reload) // ストックリストを再取得
+      onClose();
     } catch (error) {
       console.error('Error editing stock:', error);
     }
