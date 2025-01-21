@@ -88,13 +88,11 @@ const ItemList = ({ stocks, fetchStocks }) => {
     try {
       const token = Cookies.get('token');
       await axios.put(`http://localhost:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
-        body: {
-          item_name: formData.itemName,
-          quantity: formData.quantity,
-          expiration_date: formData.expirationDate,
-          expiration_type: formData.expirationType,
-          recipe_name: formData.recipe_name,
-        }
+        item_name: formData.itemName,
+        quantity: formData.quantity,
+        expiration_date: formData.expirationDate,
+        expiration_type: formData.expirationType,
+        recipe_name: formData.recipe_name,
       }, {
         headers: {
           'Authorization': token
