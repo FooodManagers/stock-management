@@ -261,7 +261,7 @@ router.put('/stockedit/:id', async (req, res) => {
     console.log('Editing stock:', item_name, quantity, expiration_date, expiration_type, recipe_name);
 
     const connection = await mysql.createConnection(dbConfig);
-    const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, stockId, email, recipe_name]);
+    const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, recipe_name, stockId, email ]);
     await connection.end();
 
     if (result.affectedRows > 0) {
