@@ -206,7 +206,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
                 <Input
                   label="有効期限"
                   name="expirationDate"
-                  value={formData.expirationDate}
+                  value={formatDate(formData.expirationDate)}
                   onChange={handleChange}
                   fullWidth
                 />
