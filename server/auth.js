@@ -246,7 +246,7 @@ router.delete('/stock/:id', async (req, res) => {
 });
 
 // ストック更新用API
-router.put('/stock/:id', async (req, res) => {
+router.put('/stockedit/:id', async (req, res) => {
   const token = req.headers['authorization'];
   if (!token) {
     return res.status(401).json({ error: 'Access denied' });
