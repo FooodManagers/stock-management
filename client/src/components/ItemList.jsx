@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/react";
+import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input } from "@heroui/react";
 import "../output.css";
 
 const ItemList = ({ stocks, fetchStocks }) => {
@@ -12,6 +12,12 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
   const [product, setProduct] = useState(null);
+  const [formData, setFormData] = useState({
+    itemName: '',
+    quantity: '',
+    expirationDate: '',
+    expirationType: '',
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,7 +53,13 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const onOpenEdit = async (stock) => {
     setIsOpenEdit(true);
     setSelectedStock(stock);
-    await getProduct(stock.jan_code)
+    await getProduct(stock.jan_code);
+    setFormData({
+      itemName: stock.item_name,
+      quantity: stock.quantity,
+      expirationDate: stock.expiration_date,
+      expirationType: stock.expiration_type,
+    });
   };
 
   const onClose = () => {
@@ -85,6 +97,14 @@ const ItemList = ({ stocks, fetchStocks }) => {
       console.error('Error editing stock:', error);
     }
   }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <div>
@@ -148,6 +168,27 @@ const ItemList = ({ stocks, fetchStocks }) => {
                     <img src={product.image_url} alt={product.goods_name} />
                   </div>
                 )}
+                <Input
+                  label="数量"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <Input
+                  label="有効期限"
+                  name="expirationDate"
+                  value={formData.expirationDate}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <Input
+                  label="有効期限の種類"
+                  name="expirationType"
+                  value={formData.expirationType}
+                  onChange={handleChange}
+                  fullWidth
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>

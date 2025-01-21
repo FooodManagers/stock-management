@@ -4,6 +4,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import "../output.css";
+import { Input, Button, Spacer, Link} from "@heroui/react";
+import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 
 function Login({ setIsAuthenticated }) {
   const [email, setEmail] = useState("");
@@ -30,46 +32,54 @@ function Login({ setIsAuthenticated }) {
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded shadow-md w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center">ログイン</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <div className="mb-4">
-          <label className="block mb-1 font-medium">メールアドレス</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-1 font-medium">パスワード</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-200"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+      <Card className="w-96 h-96">
+        <form
+          onSubmit={handleSubmit}
+          // className="bg-white p-6 rounded shadow-md w-96"
         >
-          ログイン
-        </button>
-        <button
-          type="button"
-          onClick={() => navigate("/register")} // 登録画面に遷移
-          className="w-full bg-gray-500 text-white py-2 rounded hover:bg-gray-600 mt-4"
-        >
-          登録
-        </button>
-      </form>
+          <h2 className="text-2xl font-bold my-8 text-center">ログイン</h2>
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          <div className="mb-6">
+            <Input
+              label="メールアドレス"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              fullWidth
+              variant="bordered"
+              size="md"
+              className="mx-auto w-80"
+            />
+          </div>
+          <Spacer y={4} />
+          <div className="mb-6">
+            <Input
+              label="パスワード"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              fullWidth
+              variant="bordered"
+              size="md"
+              className="mx-auto w-80"
+            />
+          </div>
+          <div className="mb-6 flex justify-center">
+            <Button
+              type="submit"
+              color="success"
+              className="text-white w-80"
+            >
+              ログイン
+            </Button>
+          </div>
+          <Link href="/register" size="md" className="text-center block">
+            登録はこちら
+          </Link>
+        </form>
+      </Card>
     </div>
   );
 }
