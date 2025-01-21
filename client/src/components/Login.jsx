@@ -66,15 +66,16 @@ function Login({ setIsAuthenticated }) {
               className="mx-auto w-80"
             />
           </div>
-          <Button
-            type="submit"
-            color="success"
-            className="text-white"
-            fullWidth
-          >
-            ログイン
-          </Button>
-          <Link href="/register">
+          <div className="mb-6 flex justify-center">
+            <Button
+              type="submit"
+              color="success"
+              className="text-white w-80"
+            >
+              ログイン
+            </Button>
+          </div>
+          <Link href="/register" size="md" className="text-center block">
             登録はこちら
           </Link>
         </form>
