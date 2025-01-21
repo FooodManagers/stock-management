@@ -59,6 +59,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       quantity: stock.quantity,
       expirationDate: stock.expiration_date,
       expirationType: stock.expiration_type,
+      recipe_name: stock.recipe_name,
     });
   };
 
@@ -81,6 +82,26 @@ const ItemList = ({ stocks, fetchStocks }) => {
       onClose();
     } catch (error) {
       console.error('Error deleting stock:', error);
+    }
+  };
+  const handleEdit = async () => {
+    try {
+      const token = Cookies.get('token');
+      await axios.put(`http://localhost:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
+        item_name: formData.itemName,
+        quantity: formData.quantity,
+        expiration_date: formData.expirationDate,
+        expiration_type: formData.expirationType,
+        recipe_name: formData.recipe_name,
+      }, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      await fetchStocks(); // ストックリストを再取得
+      onClose(); // モーダルを閉じる
+    } catch (error) {
+      console.error('Error editing stock:', error);
     }
   };
 
@@ -169,6 +190,13 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   </div>
                 )}
                 <Input
+                  label="商品名"
+                  name="itemName"
+                  value={formData.itemName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <Input
                   label="数量"
                   name="quantity"
                   value={formData.quantity}
@@ -189,13 +217,20 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   onChange={handleChange}
                   fullWidth
                 />
+                <Input
+                  label="レシピ名"
+                  name='recipe_name'
+                  value={formData.recipe_name}
+                  onChange={handleChange}
+                  fullWidth
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>
                   キャンセル
                 </Button>
-                <Button color="success" onPress={onClose}>
-                  編集
+                <Button color="success" onPress={handleEdit}>
+                  保存
                 </Button>
               </ModalFooter>
             </>
