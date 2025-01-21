@@ -257,6 +257,7 @@ router.put('/stockedit/:id', async (req, res) => {
     const email = decoded.email;
     const stockId = req.params.id;
     const { item_name, quantity, expiration_date, expiration_type, recipe_name} = req.body;
+    console.log('Editing stock:', stockId);
 
     const connection = await mysql.createConnection(dbConfig);
     const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, stockId, email, recipe_name]);
