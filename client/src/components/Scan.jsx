@@ -69,7 +69,7 @@ export const Scan = () => {
           console.log("janCode:", data.adoptedValue);/*jancodeが入る*/
           jancode = data.adoptedValue;
           setDetectedCode(data.adoptedValue);
-          sendJanToServer(jancode);/*75行目のsendJanToServerの処理を行う*/
+          sendJanToServer(jancode);/*商品情報を得て、登録画面に遷移する関数*/
         } else {
           alert('JANCODEが見つかりませんでした。\n「手入力する」を選択して登録してください。');
           console.error("コード処理エラー");
@@ -78,7 +78,7 @@ export const Scan = () => {
       .catch((err) => console.error(err));
   };
 
-  //jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る関数
+  //jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送り、Scanfinish.jsxへ遷移する関数
   const sendJanToServer = (input) => {
     fetch("http://localhost:5000/api/jan", {
       method: "POST",
@@ -140,4 +140,4 @@ export const Scan = () => {
 
 };
 
-export default Scan;/*他のファイルでこのファイルを読み込む(import)ときに好きな名前を付けられる*/
+export default Scan;
