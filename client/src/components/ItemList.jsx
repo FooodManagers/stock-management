@@ -147,16 +147,18 @@ const ItemList = ({ stocks, fetchStocks }) => {
           <Card className='shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>
-                  <h1 className='text-lg font-bold'>{stock.item_name}</h1>
+                    <h1 className='text-lg font-bold'>{stock.item_name}</h1>
+                    {console.log(stock.item_name)}
                   <Divider />
                   <div className='flex gap-2'>
-                    <p className='flex gap-2'><p className='font-semibold'>購入日</p>：{formatDate(stock.buy_date)}</p>
+                  <p className='flex gap-2'><span className='font-semibold'>購入日</span>：{formatDate(stock.buy_date)}</p>
                     {stock.expiration_type !== 'なし' && (
-                    <p className='flex gap-2 pl-5'><p className='font-semibold'>{stock.expiration_type}</p>： {formatDate(stock.expiration_date)}</p>
+                     <p className='flex gap-2 pl-5'><span className='font-semibold'>{stock.expiration_type}</span>：<span>{formatDate(stock.expiration_date)}</span></p>
                     )}
                   </div>
                   <div className='flex gap-2'>
-                    <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
+                  <p className='flex gap-2 w-full'><span className='font-semibold'>数量</span>：<span>{stock.quantity}</span></p>
+                    {console.log(stock.quantity)}
                     <div className='flex justify-end w-full'>
                       <Button auto size='small' color='success' variant='flat' onPress={() => onOpenEdit(stock)}>編集</Button>
                       <Spacer x={1} />
