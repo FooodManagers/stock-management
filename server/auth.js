@@ -245,5 +245,35 @@ router.delete('/stock/:id', async (req, res) => {
   }
 });
 
+// ストック更新用API
+router.put('/stockedit/:id', async (req, res) => {
+  const token = req.headers['authorization'];
+  if (!token) {
+    return res.status(401).json({ error: 'Access denied' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    const email = decoded.email;
+    const stockId = req.params.id;
+    console.log('Editing stock:', stockId);
+    const { item_name, quantity, expiration_date, expiration_type, recipe_name} = req.body;
+    console.log('Editing stock:', item_name, quantity, expiration_date, expiration_type, recipe_name);
+
+    const connection = await mysql.createConnection(dbConfig);
+    const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, recipe_name, stockId, email ]);
+    await connection.end();
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Stock not found' });
+    }
+  } catch (error) {
+    console.error('Error editing stock:', error);
+    res.status(500).json({ error: 'Failed to edit stock' });
+  }
+});
+
 
 module.exports = router;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input } from "@heroui/react";
+import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input, DatePicker, } from "@heroui/react";
+import {DateValue, now, parseAbsoluteToLocal} from "@internationalized/date";
+import {useDateFormatter} from "@react-aria/i18n";
 import "../output.css";
 
 const ItemList = ({ stocks, fetchStocks }) => {
@@ -12,6 +14,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
   const [product, setProduct] = useState(null);
+  const [date, setDate] = useState(now());
   const [formData, setFormData] = useState({
     itemName: '',
     quantity: '',
@@ -21,6 +24,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('fetchData');
       const token = Cookies.get('token');
       try {
         const response = await axios.get('http://localhost:5000/api/auth/stock', {
@@ -45,6 +49,14 @@ const ItemList = ({ stocks, fetchStocks }) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const formatDateForInput = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const onOpenDelete = (stock) => {
     setSelectedStock(stock);
     setIsOpenDelete(true);
@@ -59,7 +71,9 @@ const ItemList = ({ stocks, fetchStocks }) => {
       quantity: stock.quantity,
       expirationDate: stock.expiration_date,
       expirationType: stock.expiration_type,
+      recipe_name: stock.recipe_name,
     });
+    setDate(parseAbsoluteToLocal(stock.expiration_date));
   };
 
   const onClose = () => {
@@ -81,6 +95,26 @@ const ItemList = ({ stocks, fetchStocks }) => {
       onClose();
     } catch (error) {
       console.error('Error deleting stock:', error);
+    }
+  };
+  const handleEdit = async () => {
+    try {
+      const token = Cookies.get('token');
+      await axios.put(`http://localhost:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
+        item_name: formData.itemName,
+        quantity: formData.quantity,
+        expiration_date: formatDate(formData.expirationDate),
+        expiration_type: formData.expirationType,
+        recipe_name: formData.recipe_name,
+      }, {
+        headers: {
+          'Authorization': token
+        }
+      });
+      setReload(!reload); // ストックリストを再取得
+      onClose();
+    } catch (error) {
+      console.error('Error editing stock:', error);
     }
   };
 
@@ -113,16 +147,18 @@ const ItemList = ({ stocks, fetchStocks }) => {
           <Card className='shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>
-                  <h1 className='text-lg font-bold'>{stock.item_name}</h1>
+                    <h1 className='text-lg font-bold'>{stock.item_name}</h1>
+                    {console.log(stock.item_name)}
                   <Divider />
                   <div className='flex gap-2'>
-                    <p className='flex gap-2'><p className='font-semibold'>購入日</p>：{formatDate(stock.buy_date)}</p>
+                  <p className='flex gap-2'><span className='font-semibold'>購入日</span>：{formatDate(stock.buy_date)}</p>
                     {stock.expiration_type !== 'なし' && (
-                    <p className='flex gap-2 pl-5'><p className='font-semibold'>{stock.expiration_type}</p>： {formatDate(stock.expiration_date)}</p>
+                     <p className='flex gap-2 pl-5'><span className='font-semibold'>{stock.expiration_type}</span>：<span>{formatDate(stock.expiration_date)}</span></p>
                     )}
                   </div>
                   <div className='flex gap-2'>
-                    <p className='flex gap-2 w-full'><p className='font-semibold'>数量</p>：{stock.quantity}</p>
+                  <p className='flex gap-2 w-full'><span className='font-semibold'>数量</span>：<span>{stock.quantity}</span></p>
+                    {console.log(stock.quantity)}
                     <div className='flex justify-end w-full'>
                       <Button auto size='small' color='success' variant='flat' onPress={() => onOpenEdit(stock)}>編集</Button>
                       <Spacer x={1} />
@@ -169,18 +205,25 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   </div>
                 )}
                 <Input
+                  label="商品名"
+                  name="itemName"
+                  value={formData.itemName}
+                  onChange={handleChange}
+                  fullWidth
+                />
+                <Input
                   label="数量"
                   name="quantity"
                   value={formData.quantity}
                   onChange={handleChange}
                   fullWidth
                 />
-                <Input
-                  label="有効期限"
+                <input
+                  type="date"
                   name="expirationDate"
-                  value={formData.expirationDate}
+                  value={formatDateForInput(formData.expirationDate)}
                   onChange={handleChange}
-                  fullWidth
+                  className="w-full"
                 />
                 <Input
                   label="有効期限の種類"
@@ -189,13 +232,20 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   onChange={handleChange}
                   fullWidth
                 />
+                <Input
+                  label="レシピ名"
+                  name='recipe_name'
+                  value={formData.recipe_name}
+                  onChange={handleChange}
+                  fullWidth
+                />
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>
                   キャンセル
                 </Button>
-                <Button color="success" onPress={onClose}>
-                  編集
+                <Button color="success" onPress={handleEdit}>
+                  保存
                 </Button>
               </ModalFooter>
             </>
