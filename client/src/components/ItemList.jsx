@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input } from "@heroui/react";
+import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input, DatePicker, } from "@heroui/react";
+import {DateValue, now, parseAbsoluteToLocal} from "@internationalized/date";
+import {useDateFormatter} from "@react-aria/i18n";
 import "../output.css";
 
 const ItemList = ({ stocks, fetchStocks }) => {
@@ -12,6 +14,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const [selectedStock, setSelectedStock] = useState(null);
   const [reload, setReload] = useState(false);
   const [product, setProduct] = useState(null);
+  const [date, setDate] = useState(now());
   const [formData, setFormData] = useState({
     itemName: '',
     quantity: '',
@@ -21,6 +24,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('fetchData');
       const token = Cookies.get('token');
       try {
         const response = await axios.get('http://localhost:5000/api/auth/stock', {
@@ -45,6 +49,14 @@ const ItemList = ({ stocks, fetchStocks }) => {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  const formatDateForInput = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const onOpenDelete = (stock) => {
     setSelectedStock(stock);
     setIsOpenDelete(true);
@@ -61,6 +73,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       expirationType: stock.expiration_type,
       recipe_name: stock.recipe_name,
     });
+    setDate(parseAbsoluteToLocal(stock.expiration_date));
   };
 
   const onClose = () => {
@@ -98,7 +111,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
           'Authorization': token
         }
       });
-      setReload(!reload) // ストックリストを再取得
+      setReload(!reload); // ストックリストを再取得
       onClose();
     } catch (error) {
       console.error('Error editing stock:', error);
@@ -203,12 +216,12 @@ const ItemList = ({ stocks, fetchStocks }) => {
                   onChange={handleChange}
                   fullWidth
                 />
-                <Input
-                  label="有効期限"
+                <input
+                  type="date"
                   name="expirationDate"
-                  value={formatDate(formData.expirationDate)}
+                  value={formatDateForInput(formData.expirationDate)}
                   onChange={handleChange}
-                  fullWidth
+                  className="w-full"
                 />
                 <Input
                   label="有効期限の種類"
