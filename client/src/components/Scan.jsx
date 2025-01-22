@@ -53,7 +53,8 @@ export const Scan = () => {
     });
   };
 
-  const sendCodesToServer = (codes) => {/*jancode20個から一番多いjancodeを見つけるためにcode.jsに送る*/
+  //jancode20個から一番多いjancodeを見つけるためにcode.jsに送る関数
+  const sendCodesToServer = (codes) => {
     console.log("sendCodes:", codes);
     fetch("http://localhost:5000/api/code", {
       method: "POST",
@@ -77,8 +78,9 @@ export const Scan = () => {
       .catch((err) => console.error(err));
   };
 
+  //jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る関数
   const sendJanToServer = (input) => {
-    fetch("http://localhost:5000/api/jan", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+    fetch("http://localhost:5000/api/jan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -105,13 +107,16 @@ export const Scan = () => {
       .catch((err) => console.error(err));
   };
 
-  const my_stop = () => {/*キャンセルボタンを押したとき*/
+  // カメラをストップする関数
+  const my_stop = () => {
     console.log("ストップ");
     Quagga.stop();
   };
+  
   const handleManualInput = () => {
     navigate('/ManualInput');
   };
+
   return (
     <div>
       <div className="w-max h-max justify-center mx-auto mt-2 bg-gray-100 shadow-md  rounded-md">
