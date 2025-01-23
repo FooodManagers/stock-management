@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Spacer} from "@heroui/react";
+import { Input, Button} from "@heroui/react";
 import { use } from "react";
 
 export const Recipes = () => {
@@ -79,14 +80,21 @@ export const Recipes = () => {
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
-      <h1>Recipe Search</h1>
-      <input
-        type="text"
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        placeholder="Enter ingredient"
-      />
-      <button onClick={handleSearch}>Search</button>
+      <Spacer y={3} />
+      <h1 className='text-lg font-bold'>レシピ検索</h1>
+      <Divider className='my-4' />
+      <div className='flex w-full mx-auto md:flex-nowrap gap-4'>
+        <Input
+          type="text"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          label="レシピを検索"
+          fullWidth
+          className='mx-4'
+        />
+        <Button onPress={handleSearch} className='my-auto mr-3'>Search</Button>
+      </div>
+      <Spacer y={4} />
       {error && <p>{error}</p>}
         {recipes.map((recipe) => (
           <div key={recipe.recipeId}>
