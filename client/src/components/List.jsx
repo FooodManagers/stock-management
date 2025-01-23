@@ -31,7 +31,7 @@ export const List = () => {
 
   return (
     <div>
-      <Spacer y={2}/>
+      <Spacer y={3}/>
       <h1 className='text-lg font-bold'>買い物リスト</h1>
       <Divider className='my-4' />
       <div className='flex w-full mx-auto md:flex-nowrap gap-4'>
