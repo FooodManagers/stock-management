@@ -76,10 +76,31 @@ export const Recipes = () => {
         setCategoryId(categoryIdData);
         localStorage.setItem(`categoryId_${keyword}`, categoryIdData);
       }
+      recipesSerch();
       setError(null);
     } catch (err) {
       console.error('Error searching category:', err);
       setError('Failed to search category.');
+    }
+  };
+
+  const recipesSerch = async () => {
+    try {
+      const cachedRecipes = localStorage.getItem(`recipes_${categoryId}`);
+      if (cachedRecipes) {
+        setRecipes(JSON.parse(cachedRecipes));
+      } else {
+        console.log("fetchRecipes");
+        const response = await axios.get('http://localhost:5000/api/recipe/recipes', {
+          params: { categoryId },
+        });
+        const recipesData = response.data.result.slice(0, 3);
+        setRecipes(recipesData);
+        localStorage.setItem(`recipes_${categoryId}`, JSON.stringify(recipesData));
+      }
+    } catch (err) {
+      console.error('Error fetching recipes:', err);
+      setError('Failed to fetch recipes.');
     }
   };
 
