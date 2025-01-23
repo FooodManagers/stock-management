@@ -92,7 +92,7 @@ export const Recipes = () => {
           fullWidth
           className='mx-4'
         />
-        <Button onPress={handleSearch} className='my-auto mr-3'>検索</Button>
+        <Button onPress={handleSearch} className='my-auto mr-3 text-white' color="success">検索</Button>
       </div>
       <Spacer y={4} />
       {error && <p>{error}</p>}
