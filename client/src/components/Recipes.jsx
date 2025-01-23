@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 export const Recipes = () => {
-    const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
 
