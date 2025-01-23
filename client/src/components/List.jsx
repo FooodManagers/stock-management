@@ -51,7 +51,7 @@ export const List = () => {
           <Card >
             <div className='flex justify-between'>
               <h1 className='text-lg font-bold my-auto mx-2'>{item}</h1>
-              <Button onPress={() => handleDeleteItem(index)} className='m-2'>削除</Button>
+              <Button onPress={() => handleDeleteItem(index)} className='m-2' color='danger' variant='flat'>削除</Button>
             </div>
           </Card>
           <Spacer y={2} />
