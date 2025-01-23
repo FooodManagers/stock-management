@@ -31,7 +31,7 @@ export const List = () => {
 
   return (
     <div>
-      <Spacer y={2}/>
+      <Spacer y={3}/>
       <h1 className='text-lg font-bold'>買い物リスト</h1>
       <Divider className='my-4' />
       <div className='flex w-full mx-auto md:flex-nowrap gap-4'>
@@ -43,7 +43,7 @@ export const List = () => {
           fullWidth
           className='mx-4'
         />
-        <Button onPress={handleAddItem} className='my-auto mr-3'>追加</Button>
+        <Button onPress={handleAddItem} className='my-auto mr-3 text-white' color="success">追加</Button>
       </div>
       <Spacer y={4} />
       {items.map((item, index) => (
@@ -51,7 +51,7 @@ export const List = () => {
           <Card >
             <div className='flex justify-between'>
               <h1 className='text-lg font-bold my-auto mx-2'>{item}</h1>
-              <Button onPress={() => handleDeleteItem(index)} className='m-2'>削除</Button>
+              <Button onPress={() => handleDeleteItem(index)} className='m-2' color='danger' variant='flat'>削除</Button>
             </div>
           </Card>
           <Spacer y={2} />
