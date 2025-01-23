@@ -16,7 +16,7 @@ function Login({ setIsAuthenticated }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/login", {
         email,
         password,
       });

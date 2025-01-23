@@ -29,7 +29,7 @@ export const Scanfinish = () => {
     // メールアドレスを取得
     const fetchMail = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/getEmail',{
+        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/getEmail',{
             
             headers: {
               'Authorization': Cookies.get('token')
@@ -84,7 +84,7 @@ fetchMail();
     };
 
     const sendDBToServer = (input) => {
-        fetch("http://localhost:5000/api/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+        fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
