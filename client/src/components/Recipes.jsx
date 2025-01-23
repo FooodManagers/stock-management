@@ -1,25 +1,88 @@
 import "../output.css"
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 export const Recipes = () => {
   const [keyword, setKeyword] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
+
+  useEffect(() => {
+    const fetchSearch = async () => {
+      try {
+        const cachedCategoryId = localStorage.getItem(`categoryId_${keyword}`);
+        if (cachedCategoryId) {
+          setCategoryId(cachedCategoryId);
+        } else {
+          console.log("fetchSearch");
+          const response = await axios.get('http://localhost:5000/api/recipe/searchCategory', {
+            params: { keyword },
+          });
+          const categoryIdData = response.data.combinedCategoryId;
+          setCategoryId(categoryIdData);
+          localStorage.setItem(`categoryId_${keyword}`, categoryIdData);
+        }
+        setError(null);
+      } catch (err) {
+        console.error('Error searching category:', err);
+        setError('Failed to search category.');
+      }
+    };
+
+    if (keyword) {
+      fetchSearch();
+    }
+  }, [keyword]); // keywordが変更されたときにfetchSearchを実行
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const cachedRecipes = localStorage.getItem(`recipes_${categoryId}`);
+        if (cachedRecipes) {
+          setRecipes(JSON.parse(cachedRecipes));
+        } else {
+          console.log("fetchRecipes");
+          const response = await axios.get('http://localhost:5000/api/recipe/recipes', {
+            params: { categoryId },
+          });
+          const recipesData = response.data.result.slice(0, 3);
+          setRecipes(recipesData);
+          localStorage.setItem(`recipes_${categoryId}`, JSON.stringify(recipesData));
+        }
+      } catch (err) {
+        console.error('Error fetching recipes:', err);
+        setError('Failed to fetch recipes.');
+      }
+    };
+
+    if (categoryId) {
+      fetchRecipes();
+    }
+  }, [categoryId]); // categoryIdが変更されたときにfetchRecipesを実行
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/recipe/search', {
-        params: { keyword },
-      });
-      const data = response.data.result || []; // デフォルト値を設定
-      setRecipes(data);
+      const cachedCategoryId = localStorage.getItem(`categoryId_${keyword}`);
+      if (cachedCategoryId) {
+        setCategoryId(cachedCategoryId);
+      } else {
+        console.log("fetchSearch");
+        const response = await axios.get('http://localhost:5000/api/recipe/searchCategory', {
+          params: { keyword },
+        });
+        const categoryIdData = response.data.combinedCategoryId;
+        setCategoryId(categoryIdData);
+        localStorage.setItem(`categoryId_${keyword}`, categoryIdData);
+      }
       setError(null);
     } catch (err) {
-      console.error('Error searching recipes:', err);
-      setError('Failed to search recipes.');
+      console.error('Error searching category:', err);
+      setError('Failed to search category.');
     }
   };
+
 
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
