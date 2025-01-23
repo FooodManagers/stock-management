@@ -43,7 +43,7 @@ export const List = () => {
           fullWidth
           className='mx-4'
         />
-        <Button onPress={handleAddItem} className='my-auto mr-3'>追加</Button>
+        <Button onPress={handleAddItem} className='my-auto mr-3 text-white' color="success">追加</Button>
       </div>
       <Spacer y={4} />
       {items.map((item, index) => (
