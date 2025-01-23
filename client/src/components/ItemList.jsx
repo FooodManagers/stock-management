@@ -27,7 +27,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       console.log('fetchData');
       const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://localhost:5000/api/auth/stock', {
+        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stock', {
           headers: {
             'Authorization': token
           }
@@ -86,7 +86,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const handleDelete = async () => {
     try {
       const token = Cookies.get('token');
-      await axios.delete(`http://localhost:5000/api/auth/stock/${selectedStock.stock_id}`, {
+      await axios.delete(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stock/${selectedStock.stock_id}`, {
         headers: {
           'Authorization': token
         }
@@ -100,7 +100,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const handleEdit = async () => {
     try {
       const token = Cookies.get('token');
-      await axios.put(`http://localhost:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
+      await axios.put(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
         item_name: formData.itemName,
         quantity: formData.quantity,
         expiration_date: formatDate(formData.expirationDate),
@@ -120,7 +120,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
 
   const getProduct = async (jan_code) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/auth/product`, {
+      const response = await axios.get(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/product`, {
         headers: {
           'jan_code': jan_code
         }

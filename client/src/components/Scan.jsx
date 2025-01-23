@@ -56,7 +56,7 @@ export const Scan = () => {
   //jancode20個から一番多いjancodeを見つけるためにcode.jsに送る関数
   const sendCodesToServer = (codes) => {
     console.log("sendCodes:", codes);
-    fetch("http://localhost:5000/api/code", {
+    fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/code", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const Scan = () => {
 
   //jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送り、Scanfinish.jsxへ遷移する関数
   const sendJanToServer = (input) => {
-    fetch("http://localhost:5000/api/jan", {
+    fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/jan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
