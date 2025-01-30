@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { Input, Button, Divider, Spacer, Card} from '@heroui/react';
 
 const ManualInput = () => {
   const navigate = useNavigate();
