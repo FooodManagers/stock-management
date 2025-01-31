@@ -1,8 +1,6 @@
 import "../output.css"
 import React from "react";
-import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@heroui/react";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Spacer, Divider} from "@heroui/react";
 import ItemList from "./ItemList";
 import { HomeRecipe } from "./HomeRecipe";
 
@@ -16,6 +14,9 @@ import 'swiper/css/scrollbar';
 export const Home = () => {
   return (
     <div>
+      <Spacer y={3}/>
+      <h1 className="text-lg font-bold">おすすめレシピ</h1>
+      <Divider className="my-4" />
       <HomeRecipe />
       <ItemList />
       <div style={{ height: '110px' }} />
