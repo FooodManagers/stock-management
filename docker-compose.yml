@@ -27,6 +27,9 @@ services:
       - backend
     expose:
       - "3306"
+    volumes:
+      - ./.data/mysql:/var/lib/mysql
+      - ./config/seeds:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
