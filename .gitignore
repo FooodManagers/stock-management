@@ -29,3 +29,5 @@ yarn-error.log*
 /client/src/output.css
 
 .env
+
+.data
