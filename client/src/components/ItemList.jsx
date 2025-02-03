@@ -26,7 +26,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       console.log('fetchData');
       const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stock', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stock`, {
           headers: {
             'Authorization': token
           }

@@ -50,7 +50,7 @@ export const Hand = () => {
       };
 
       try {
-        const response = await axios.post('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stockRegister', { data: dataToSend });
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stockRegister`, { data: dataToSend });
         console.log('データ登録成功:', response.data);
       } catch (error) {
         console.error('データ登録エラー:', error);

@@ -29,7 +29,7 @@ export const Recipes = () => {
         setCategoryId(cachedCategoryId);
       } else {
         console.log("fetchSearch");
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/recipe/searchCategory', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/recipe/searchCategory`, {
           params: { keyword },
         });
         const categoryIdData = response.data.combinedCategoryId;
@@ -53,7 +53,7 @@ export const Recipes = () => {
         setRecipes(JSON.parse(cachedRecipes));
       } else {
         console.log("fetchRecipes");
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/recipe/recipes', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/recipe/recipes`, {
           params: { categoryId },
         });
         const recipesData = response.data.result.slice(0, 3);
