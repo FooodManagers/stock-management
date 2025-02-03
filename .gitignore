@@ -27,3 +27,5 @@ yarn-error.log*
 
 # Tailwind CSS ビルド結果
 /client/src/output.css
+
+.env
