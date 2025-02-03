@@ -83,7 +83,7 @@ fetchMail();
     };
 
     const sendDBToServer = (input) => {
-        fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/jandb", {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
+        fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/jandb`, {/*jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送る*/
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

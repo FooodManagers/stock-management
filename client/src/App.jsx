@@ -30,7 +30,7 @@ const AppContent = () => {
     const token = Cookies.get("token");
     if (token) {
       axios
-        .post("http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/verifyToken", { token })
+        .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/verifyToken`, { token })
         .then((response) => {
           if (response.data.valid) {
             setIsAuthenticated(true);
