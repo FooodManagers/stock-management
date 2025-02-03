@@ -21,8 +21,8 @@ app.use('/api/jan', jan);
 app.use(cors());
 app.use(express.json());
 
-// React の静的ファイルを提供
-app.use(express.static(path.join(__dirname, '../client/build')));
+// // React の静的ファイルを提供
+// app.use(express.static(path.join(__dirname, '../client/build')));
 
 // サンプル API エンドポイント
 // app.get('/api/message', (req, res) => {
