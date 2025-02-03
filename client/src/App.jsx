@@ -18,6 +18,7 @@ import axios from "axios";
 import { Hand } from './components/Hand';
 import { Scanfinish } from './components/Scanfinish';
 import ManualInput from './components/ManualInput';
+import "./global.css";
 
 const AppContent = () => {
   const [message, setMessage] = useState("");
