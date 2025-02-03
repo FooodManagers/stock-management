@@ -11,11 +11,11 @@ const jan = require('./jan');
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
-app.use('/api/auth', auth);
-app.use('/api/recipe', recipe);
-app.use('/api/jandb', jandb);
-app.use('/api/code', code);
-app.use('/api/jan', jan);
+app.use('/auth', auth);
+app.use('/recipe', recipe);
+app.use('/jandb', jandb);
+app.use('/code', code);
+app.use('/jan', jan);
 
 // ミドルウェア設定
 app.use(cors());
@@ -29,7 +29,7 @@ app.use(express.json());
 //     res.json({ message: 'Hello from the backend!' });
 // });
 // /api/stock エンドポイントを追加
-app.get('/api/stock',async (req, res) => {
+app.get('/stock',async (req, res) => {
     try {
         const items = await stockList.getItems(); // stockList モジュールを使用してデータを取得
         res.json(items);
