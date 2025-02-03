@@ -40,11 +40,11 @@ app.get('/api/stock',async (req, res) => {
 });
 
 
-// その他のリクエストは React の index.html を返す
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
+// // その他のリクエストは React の index.html を返す
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
+//
 
 // サーバーを起動
 app.listen(PORT, () => {
