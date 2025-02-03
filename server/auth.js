@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const dbConfig = {
-  host: 'localhost',
+  host: process.env.DB_HOST,
   user: 'root',
-  password: 'kys008mysqlroot',
-  database: 'stockmanagementdb',
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
 const secretKey = process.env.JWT_SECRET || 'your_jwt_secret_key';
@@ -161,17 +161,17 @@ router.get('/recipeword', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch recipe data' });
   }
 });
-      // jan_code: null,
-      // item_name: itemNameRef.current.value,
-      // quantity: quantityRef.current.value,
-      // expiration_date: expirationDate,
-      // expiration_type: expirationType,
-      // recipe_name: recipeNameRef.current.value,
-      // buy_date: buyDateRef.current.value,
-      // mail: mail[0].email
+// jan_code: null,
+// item_name: itemNameRef.current.value,
+// quantity: quantityRef.current.value,
+// expiration_date: expirationDate,
+// expiration_type: expirationType,
+// recipe_name: recipeNameRef.current.value,
+// buy_date: buyDateRef.current.value,
+// mail: mail[0].email
 router.post('/stockRegister', async (req, res) => {
   /*stockテーブルに登録するデータ*/
-  const {jan_code,item_name, quantity, expiration_date, expiration_type,has_expiration ,recipe_name, buy_date ,mail} = req.body.data;
+  const { jan_code, item_name, quantity, expiration_date, expiration_type, has_expiration, recipe_name, buy_date, mail } = req.body.data;
   /*stockテーブルに登録するクエリ*/
   const insertQuery2 = `
       INSERT INTO stock (jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity, mail)
@@ -180,7 +180,7 @@ router.post('/stockRegister', async (req, res) => {
   /*stockテーブルにデータを登録*/
   try {
     const connection = await mysql.createConnection(dbConfig);
-    const [results] = await connection.execute(insertQuery2, [jan_code, item_name, recipe_name, expiration_date, expiration_type,has_expiration, buy_date, quantity, mail]);
+    const [results] = await connection.execute(insertQuery2, [jan_code, item_name, recipe_name, expiration_date, expiration_type, has_expiration, buy_date, quantity, mail]);
     await connection.end();
 
     console.log('データ登録成功:', results);
@@ -257,11 +257,11 @@ router.put('/stockedit/:id', async (req, res) => {
     const email = decoded.email;
     const stockId = req.params.id;
     console.log('Editing stock:', stockId);
-    const { item_name, quantity, expiration_date, expiration_type, recipe_name} = req.body;
+    const { item_name, quantity, expiration_date, expiration_type, recipe_name } = req.body;
     console.log('Editing stock:', item_name, quantity, expiration_date, expiration_type, recipe_name);
 
     const connection = await mysql.createConnection(dbConfig);
-    const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, recipe_name, stockId, email ]);
+    const [result] = await connection.execute('UPDATE stock SET item_name = ?, quantity = ?, expiration_date = ?, expiration_type = ?, recipe_name = ? WHERE stock_id = ? AND mail = ?', [item_name, quantity, expiration_date, expiration_type, recipe_name, stockId, email]);
     await connection.end();
 
     if (result.affectedRows > 0) {
