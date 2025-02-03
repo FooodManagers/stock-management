@@ -20,7 +20,7 @@ const ManualInput = () => {
   useEffect(() => {
     const fetchMail = async () => {
       try {
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/getEmail',{
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/getEmail`,{
             
             headers: {
               'Authorization': Cookies.get('token')
@@ -58,7 +58,7 @@ const ManualInput = () => {
     console.log('データ登録:', dataToSend);
 
     try {
-      const response = await axios.post('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stockRegister', { data: dataToSend });
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stockRegister`, { data: dataToSend });
       console.log('データ登録成功:', response.data);
       navigate('/'); // homeに戻る
     } catch (error) {

@@ -1,4 +1,3 @@
-import "../output.css"
 import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
@@ -56,7 +55,7 @@ export const Scan = () => {
   //jancode20個から一番多いjancodeを見つけるためにcode.jsに送る関数
   const sendCodesToServer = (codes) => {
     console.log("sendCodes:", codes);
-    fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/code", {
+    fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/code`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +79,7 @@ export const Scan = () => {
 
   //jancodeを元にJANCODELOOKUPAPIからデータを得るためにjan.jsにデータを送り、Scanfinish.jsxへ遷移する関数
   const sendJanToServer = (input) => {
-    fetch("http://it232044-pc.tail6d80a5.ts.net:5000/api/jan", {
+    fetch(`${process.env.REACT_APP_BACKEND_BASE_URL}/jan`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

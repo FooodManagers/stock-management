@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input, DatePicker, } from "@heroui/react";
 import {DateValue, now, parseAbsoluteToLocal} from "@internationalized/date";
 import {useDateFormatter} from "@react-aria/i18n";
-import "../output.css";
 
 const ItemList = ({ stocks, fetchStocks }) => {
   const [items, setItems] = useState([]);
@@ -27,7 +26,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
       console.log('fetchData');
       const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stock', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stock`, {
           headers: {
             'Authorization': token
           }
@@ -86,7 +85,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const handleDelete = async () => {
     try {
       const token = Cookies.get('token');
-      await axios.delete(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stock/${selectedStock.stock_id}`, {
+      await axios.delete(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stock/${selectedStock.stock_id}`, {
         headers: {
           'Authorization': token
         }
@@ -100,7 +99,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const handleEdit = async () => {
     try {
       const token = Cookies.get('token');
-      await axios.put(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/stockedit/${selectedStock.stock_id}`, {
+      await axios.put(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/stockedit/${selectedStock.stock_id}`, {
         item_name: formData.itemName,
         quantity: formData.quantity,
         expiration_date: formatDate(formData.expirationDate),
@@ -120,7 +119,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
 
   const getProduct = async (jan_code) => {
     try {
-      const response = await axios.get(`http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/product`, {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/product`, {
         headers: {
           'jan_code': jan_code
         }

@@ -1,5 +1,4 @@
 import React from "react";
-import "../output.css"
 import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image} from "@heroui/react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -24,7 +23,7 @@ export const HomeRecipe = () => {
     const fetchData = async () => {
       const token = Cookies.get('token');
       try {
-        const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/recipeword', {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/recipeword`, {
           headers: {
             'Authorization': token
           }
@@ -48,7 +47,7 @@ export const HomeRecipe = () => {
           setCategoryId(cachedCategoryId);
         } else {
           console.log("fetchSearch");
-          const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/recipe/searchCategory', {
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/recipe/searchCategory`, {
             params: { keyword },
           });
           const categoryIdData = response.data.combinedCategoryId;
@@ -75,7 +74,7 @@ export const HomeRecipe = () => {
           setRecipes(JSON.parse(cachedRecipes));
         } else {
           console.log("fetchRecipes");
-          const response = await axios.get('http://it232044-pc.tail6d80a5.ts.net:5000/api/recipe/recipes', {
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/recipe/recipes`, {
             params: { categoryId },
           });
           const recipesData = response.data.result.slice(0, 3);

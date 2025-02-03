@@ -18,6 +18,7 @@ import axios from "axios";
 import { Hand } from './components/Hand';
 import { Scanfinish } from './components/Scanfinish';
 import ManualInput from './components/ManualInput';
+import "./global.css";
 
 const AppContent = () => {
   const [message, setMessage] = useState("");
@@ -29,7 +30,7 @@ const AppContent = () => {
     const token = Cookies.get("token");
     if (token) {
       axios
-        .post("http://it232044-pc.tail6d80a5.ts.net:5000/api/auth/verifyToken", { token })
+        .post(`${process.env.REACT_APP_BACKEND_BASE_URL}/auth/verifyToken`, { token })
         .then((response) => {
           if (response.data.valid) {
             setIsAuthenticated(true);

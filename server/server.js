@@ -11,25 +11,25 @@ const jan = require('./jan');
 const app = express();
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
-app.use('/api/auth', auth);
-app.use('/api/recipe', recipe);
-app.use('/api/jandb', jandb);
-app.use('/api/code', code);
-app.use('/api/jan', jan);
+app.use('/auth', auth);
+app.use('/recipe', recipe);
+app.use('/jandb', jandb);
+app.use('/code', code);
+app.use('/jan', jan);
 
 // ミドルウェア設定
 app.use(cors());
 app.use(express.json());
 
-// React の静的ファイルを提供
-app.use(express.static(path.join(__dirname, '../client/build')));
+// // React の静的ファイルを提供
+// app.use(express.static(path.join(__dirname, '../client/build')));
 
 // サンプル API エンドポイント
 // app.get('/api/message', (req, res) => {
 //     res.json({ message: 'Hello from the backend!' });
 // });
 // /api/stock エンドポイントを追加
-app.get('/api/stock',async (req, res) => {
+app.get('/stock',async (req, res) => {
     try {
         const items = await stockList.getItems(); // stockList モジュールを使用してデータを取得
         res.json(items);
@@ -40,11 +40,11 @@ app.get('/api/stock',async (req, res) => {
 });
 
 
-// その他のリクエストは React の index.html を返す
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build/index.html'));
-});
-
+// // その他のリクエストは React の index.html を返す
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/build/index.html'));
+// });
+//
 
 // サーバーを起動
 app.listen(PORT, () => {
