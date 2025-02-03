@@ -1,4 +1,3 @@
-import "../output.css"
 import "../scan.css"
 import React, { useRef, useState } from 'react';
 import Quagga from 'quagga';
