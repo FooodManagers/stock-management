@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import "../output.css";
 import { Link, useLocation } from 'react-router-dom';
 
 export const BottomNaviBar = () => {

@@ -3,7 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import "../output.css";
 import { Input, Button, Spacer, Link} from "@heroui/react";
 import {Card, CardBody, CardFooter, CardHeader} from "@heroui/react";
 

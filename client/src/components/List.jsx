@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import "../output.css";
 import { Input, Button, Divider, Spacer, Card} from '@heroui/react';
 
 export const List = () => {

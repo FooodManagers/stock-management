@@ -4,7 +4,6 @@ import Cookies from 'js-cookie';
 import { Card, CardBody, Button, Divider, Spacer, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter,Input, DatePicker, } from "@heroui/react";
 import {DateValue, now, parseAbsoluteToLocal} from "@internationalized/date";
 import {useDateFormatter} from "@react-aria/i18n";
-import "../output.css";
 
 const ItemList = ({ stocks, fetchStocks }) => {
   const [items, setItems] = useState([]);
