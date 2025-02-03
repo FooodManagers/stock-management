@@ -4,10 +4,10 @@ const router = express.Router();
 
 /*mySQLへの接続情報*/
 const connection = mysql.createConnection({
-    host: 'localhost',
+    host: process.env.DB_HOST,
     user: 'root',
-    password: 'kys008mysqlroot',
-    database: 'stockmanagementdb',
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
 });
 
 // 接続
