@@ -112,7 +112,7 @@ export const HomeRecipe = () => {
         
           <SwiperSlide>
             <div key={recipe.recipeId}>
-              <Card className="py-4 ">
+              <Card className="py-4 bg-default-50 m-2">
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <h4 className="font-bold text-large">{recipe.recipeTitle}</h4>
                 </CardHeader>
