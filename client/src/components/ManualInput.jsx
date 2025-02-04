@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { Input, Button, Divider, Spacer, Card} from '@heroui/react';
 
 const ManualInput = () => {
   const navigate = useNavigate();
@@ -68,9 +69,10 @@ const ManualInput = () => {
 
   return (
     <div>
-      <h2>手入力でデータを登録</h2>
+      <Spacer y={3}/>
+      <h2 className='text-lg font-bold'>手入力でデータを登録</h2>
       <div>
-        <label>商品名: <input type="text" ref={itemNameRef} placeholder="商品名を入力してください" /></label>
+        <label >商品名: <input type="text" ref={itemNameRef} placeholder="商品名を入力してください" /></label>
       </div>
       <div>
         <label>数量: <input type="number" ref={quantityRef} placeholder="数量を入力してください" /></label>
