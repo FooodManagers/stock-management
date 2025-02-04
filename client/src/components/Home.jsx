@@ -15,9 +15,10 @@ export const Home = () => {
   return (
     <div>
       <Spacer y={3}/>
-      <h1 className="text-lg font-bold">おすすめレシピ</h1>
+      <h1 className="text-lg font-bold ml-3">おすすめレシピ</h1>
       <Divider className="my-4" />
       <HomeRecipe />
+      <Spacer y={3}/>
       <ItemList />
       <div style={{ height: '110px' }} />
     </div>
