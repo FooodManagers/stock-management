@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { Button } from "@heroui/react";
 export const Scanfinish = () => {
     const navigate = useNavigate();
     const result = useRef();
@@ -21,6 +22,7 @@ export const Scanfinish = () => {
     const itemData = JSON.parse(JSON.stringify(receivedData)); /* Scan.jsxから渡されたデータをJSON化して読込み*/
     console.log(itemData.itemName); /*スキャンした商品名*/
     console.log(itemData.itemImageUrl); /*スキャンした商品イメージのURL*/
+    const today = new Date().toISOString().split('T')[0];
 
     const [mail, setMail] = useState([]);
 
@@ -111,7 +113,7 @@ fetchMail();
 
     return (
         <div>
-            <div className="page">
+            <div className="justify-center m-3 bg-white shadow-md  rounded-md">
                 <div className="goods">
                     <div><img id='image' src={`${itemData.itemImageUrl}`} alt=""></img></div>
                     <div className="goodsname">
@@ -126,13 +128,13 @@ fetchMail();
                         <option defaultValue="賞味期限">賞味期限</option>
                         <option defaultValue="消費期限">消費期限</option>
                     </select>
-                    <label className="date-edit"><input type="date" ref={date} defaultValue="" name="deadline" /></label><br></br>
+                    <label className="date-edit"><input type="date" ref={date} defaultValue={today} name="deadline" /></label><br></br>
                     <label><input type="checkbox" name="nasi" ref={nasi} />期限なし</label>
                 </div>
                 <p id="checkmessage" style={{ color: "red" }}></p>
                 <div className="tag">
                     <div className="display">
-                        <label>購入日<input type="date" ref={buydate} defaultValue="" name="buydate" required /></label>
+                        <label>購入日<input type="date" ref={buydate} defaultValue={today} name="buydate" required /></label>
                     </div>
                     <div>購入数</div>
                     <select ref={su} name="su">
@@ -147,11 +149,10 @@ fetchMail();
                         <option defaultValue="9">9</option>
                     </select>
                     <div>レシピ用名称</div>
-                    <input type="text" ref={recipe} name="recipename" defaultValue="" placeholder="入力してください入力してください" required />
-                    <div className="finish">
-                        <button onClick={finish}>登録</button>
-                    </div>
+                    <input type="text" ref={recipe} name="recipename" defaultValue="" placeholder="入力してください" required />
+                    
                 </div>
+                <Button color="success" onPress={finish} fullWidth="true" size="lg" className="text-white m-4 justify-center mx-auto">登録</Button>
             </div>
         </div >
     );
