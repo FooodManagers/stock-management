@@ -123,9 +123,9 @@ export const Scan = () => {
         <div className="flex justify-center items-center">
           <div className="m-2 mx-auto" id="my_quagga"/>
         </div>
-        <div className="flex justify-center pt-3 pb-3">
-          <Button color="success"onPress={my_start} className="pr-3 mx-auto">スキャン</Button>
-          <Button color="default" onPress={my_stop} className="pl-3 mx-auto">キャンセル</Button>
+        <div className="flex flex-col items-center">
+          <Button color="success"onPress={my_start} size="lg" fullWidth="true" className="mt-3 text-white"> スキャン </Button>
+          <Button color="default" onPress={my_stop} size="lg" fullWidth="true" className="mt-3 mb-3 ">キャンセル</Button>
         </div>
       </div>
       <button onClick={handleManualInput} className="hand mx-auto mt-3 text-blue-500 text-lg">手入力する</button>
