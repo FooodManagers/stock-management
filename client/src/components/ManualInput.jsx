@@ -68,41 +68,70 @@ const ManualInput = () => {
   };
 
   return (
-    <div>
-      <Spacer y={3}/>
-      <h2 className='text-lg font-bold'>手入力でデータを登録</h2>
-      <div>
-        <label >商品名: <input type="text" ref={itemNameRef} placeholder="商品名を入力してください" /></label>
-      </div>
-      <div>
-        <label>数量: <input type="number" ref={quantityRef} placeholder="数量を入力してください" /></label>
-      </div>
-      <div>
-        <label>賞味期限・消費期限: <input type="date" ref={expirationDateRef} /></label>
-      </div>
-      <div>
-        <label>期限タイプ: 
-          <select ref={expirationTypeRef}>
-            <option value="賞味期限">賞味期限</option>
-            <option value="消費期限">消費期限</option>
-            <option value="なし">なし</option>
-          </select>
-        </label>
-      </div>
-      {/* <div>
-        <label>期限なし: <input type="checkbox" ref={nasiRef} /></label>
-      </div> */}
-      <div>
-        <label>レシピ名: <input type="text" ref={recipeNameRef} placeholder="レシピ名を入力してください" /></label>
-      </div>
-      <div>
-        <label>購入日: <input type="date" ref={buyDateRef} /></label>
-      </div>
-      {/* <div>
-      <label>レシピ名: <input type="text" ref={mailRef} placeholder="メールアドレス" /></label>
-      </div> */}
-      <button onClick={handleSubmit}>登録</button>
-    </div>
+    <div className="max-w-md mx-auto p-4 bg-white rounded shadow">
+  <h2 className="text-xl font-bold mb-4">手入力でデータを登録</h2>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">商品名</label>
+    <input
+      type="text"
+      ref={itemNameRef}
+      placeholder="商品名を入力してください"
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">数量</label>
+    <input
+      type="number"
+      ref={quantityRef}
+      placeholder="数量を入力してください"
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">賞味期限・消費期限</label>
+    <input
+      type="date"
+      ref={expirationDateRef}
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">期限タイプ</label>
+    <select
+      ref={expirationTypeRef}
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    >
+      <option value="賞味期限">賞味期限</option>
+      <option value="消費期限">消費期限</option>
+      <option value="なし">なし</option>
+    </select>
+  </div>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">レシピ名</label>
+    <input
+      type="text"
+      ref={recipeNameRef}
+      placeholder="レシピ名を入力してください"
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    />
+  </div>
+  <div className="mb-4">
+    <label className="block mb-1 font-semibold">購入日</label>
+    <input
+      type="date"
+      ref={buyDateRef}
+      className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-indigo-200"
+    />
+  </div>
+  <Button
+    onPress={handleSubmit}
+    color="success"
+    className="w-full py-2  text-white font-semibold rounded"
+  >
+    登録
+  </Button>
+</div>
   );
 };
 
