@@ -130,7 +130,11 @@ router.get('/product', async (req, res) => {
     const [rows] = await connection.execute('SELECT * FROM product WHERE jan_code = ?', [jan_code]);
     await connection.end();
 
-    res.json(rows);
+    if (rows.length > 0) {
+      res.json(rows);
+    } else {
+      res.status(404).json({ error: 'Product not found' });
+    }
   } catch (error) {
     console.error('Error fetching product data:', error);
     res.status(500).json({ error: 'Failed to fetch product data' });

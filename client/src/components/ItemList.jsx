@@ -64,6 +64,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   const onOpenEdit = async (stock) => {
     setIsOpenEdit(true);
     setSelectedStock(stock);
+    console.log(stock.jan_code);
     await getProduct(stock.jan_code);
     setFormData({
       itemName: stock.item_name,
