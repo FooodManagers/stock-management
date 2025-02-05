@@ -15,9 +15,13 @@ export const Settings = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div>
-      <h1>Settings</h1>
-      <button onClick={handleLogout}>ログアウト</button>
+    <div className="max-w-md mx-auto p-6 bg-white mt-10 rounded shadow">
+      <button 
+        onClick={handleLogout}
+        className="w-full py-2 px-4 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+      >
+        ログアウト
+      </button>
     </div>
   );
 };
