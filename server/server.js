@@ -9,6 +9,8 @@ const code = require('./code');
 const jan = require('./jan');
 
 const app = express();
+// ミドルウェア設定
+app.use(cors());
 app.use(express.json());
 const PORT = process.env.PORT || 5000;
 app.use('/auth', auth);
@@ -17,8 +19,7 @@ app.use('/jandb', jandb);
 app.use('/code', code);
 app.use('/jan', jan);
 
-// ミドルウェア設定
-app.use(cors());
+
 app.use(express.json());
 
 // // React の静的ファイルを提供
