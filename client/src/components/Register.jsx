@@ -18,7 +18,6 @@ function Register() {
         password,
       });
       setError("");
-      alert("ユーザー登録成功!");
       navigate("/login"); // ログイン画面にリダイレクト
     } catch (err) {
       setError("ユーザー登録に失敗しました。メールアドレスまたはパスワードを確認してください。");
