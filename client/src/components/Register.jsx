@@ -59,7 +59,7 @@ function Register() {
             />
           </div>
           <div className="mb-6 flex justify-center">
-            <Button type="submit" color="success" className="text-white w-80">
+            <Button type="submit" color="primary" className="text-white w-80">
               登録
             </Button>
           </div>
