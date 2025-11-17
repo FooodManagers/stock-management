@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Spacer} from "@heroui/react";
 import { Input, Button} from "@heroui/react";
-import { use } from "react";
 
 export const Recipes = () => {
   const [keyword, setKeyword] = useState('');
@@ -80,7 +79,7 @@ export const Recipes = () => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <Spacer y={3} />
-      <h1 className='text-lg font-bold'>レシピ検索</h1>
+      <h1 className='text-lg font-bold ml-3'>レシピ検索</h1>
       <Divider className='my-4' />
       <div className='flex w-full mx-auto md:flex-nowrap gap-4'>
         <Input
