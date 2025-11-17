@@ -4,10 +4,10 @@ require('dotenv').config();
 
 
 const dbConfig = {
-  host: 'localhost',
+  host: process.env.DB_HOST,
   user: 'root',
-  password: 'kys008mysqlroot',
-  database: 'stockmanagementdb',
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
 
