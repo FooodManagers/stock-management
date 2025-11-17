@@ -22,7 +22,6 @@ function Login({ setIsAuthenticated }) {
       Cookies.set("token", response.data.token, { expires: 1 }); // JWTをCookieに保存
       setError("");
       setIsAuthenticated(true); // 認証状態を更新
-      alert("ログイン成功!");
       navigate("/"); // ホーム画面にリダイレクト
     } catch (err) {
       setError("ログインに失敗しました。メールアドレスまたはパスワードを確認してください。");

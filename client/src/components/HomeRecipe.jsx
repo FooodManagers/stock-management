@@ -16,7 +16,6 @@ export const HomeRecipe = () => {
   const [keyword, setKeyword] = useState('');
   const [categoryId, setCategoryId] = useState(null);
   const [error, setError] = useState(null);
-  const [items, setItems] = useState([]);
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -116,7 +115,7 @@ export const HomeRecipe = () => {
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                   <h4 className="font-bold text-large">{recipe.recipeTitle}</h4>
                 </CardHeader>
-                <CardBody className="overflow-visible py-2">
+                <CardBody className="overflow-visible py-2 items-center">
                   <Image
                     alt="Card background"
                     className="object-cover rounded-xl flex justify-center items-center"

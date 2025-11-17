@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const { body, validationResult } = require('express-validator');
 const mysql = require('mysql2/promise');
-// const bcrypt = require('bcrypt');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -13,7 +12,7 @@ const dbConfig = {
   database: process.env.DB_NAME,
 };
 
-const secretKey = process.env.JWT_SECRET || 'your_jwt_secret_key';
+const secretKey = process.env.JWT_SECRET;
 
 router.get('/', (req, res) => {
   res.send('Hello from the auth router!');
@@ -166,14 +165,6 @@ router.get('/recipeword', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch recipe data' });
   }
 });
-// jan_code: null,
-// item_name: itemNameRef.current.value,
-// quantity: quantityRef.current.value,
-// expiration_date: expirationDate,
-// expiration_type: expirationType,
-// recipe_name: recipeNameRef.current.value,
-// buy_date: buyDateRef.current.value,
-// mail: mail[0].email
 router.post('/stockRegister', async (req, res) => {
   /*stockテーブルに登録するデータ*/
   const { jan_code, item_name, quantity, expiration_date, expiration_type, has_expiration, recipe_name, buy_date, mail } = req.body.data;
@@ -277,6 +268,122 @@ router.put('/stockedit/:id', async (req, res) => {
   } catch (error) {
     console.error('Error editing stock:', error);
     res.status(500).json({ error: 'Failed to edit stock' });
+  }
+});
+
+// Middleware: JWT認証
+const shoppingListAuth = async (req, res, next) => {
+  const token = req.headers['authorization'];
+  if (!token) return res.status(401).json({ error: 'Access denied' });
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    req.email = decoded.email;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: 'Invalid token' });
+  }
+};
+
+// アイテム追加
+// POST /shopping-list
+router.post('/shopping-list', shoppingListAuth, async (req, res) => {
+  const { name } = req.body;
+  const email = req.email;
+
+  if (!name) return res.status(400).json({ error: 'Item name is required' });
+
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const [result] = await connection.execute(
+      'INSERT INTO shopping_list (mail, name) VALUES (?, ?)',
+      [email, name]
+    );
+    await connection.end();
+
+    res.status(201).json({ id: result.insertId, mail: email, name, is_checked: false });
+  } catch (err) {
+    console.error('Error adding item:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// 一覧取得
+// GET /shopping-list
+
+router.get('/shopping-list', shoppingListAuth, async (req, res) => {
+  const email = req.email;
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const [rows] = await connection.execute(
+      'SELECT * FROM shopping_list WHERE mail = ? ORDER BY created_at DESC',
+      [email]
+    );
+    await connection.end();
+
+    res.json(rows);
+  } catch (err) {
+    console.error('Error fetching items:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// チェック付け・外し
+// PATCH /shopping-list/:id/check
+
+router.patch('/shopping-list/:id/check', shoppingListAuth, async (req, res) => {
+  const id = req.params.id;
+  const { is_checked } = req.body;
+  const email = req.email;
+
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const [result] = await connection.execute(
+      'UPDATE shopping_list SET is_checked = ? WHERE shopping_list_id = ? AND mail = ?',
+      [is_checked, id, email]
+    );
+    await connection.end();
+
+    if (result.affectedRows > 0) {
+      res.json({ id, is_checked });
+    } else {
+      res.status(404).json({ error: 'Item not found' });
+    }
+  } catch (err) {
+    console.error('Error updating item:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// 削除
+// DELETE /shopping-list/:id
+
+router.delete('/shopping-list/:id', shoppingListAuth, async (req, res) => {
+  const id = req.params.id;
+  const email = req.email;
+
+  let connection;
+  try {
+    connection = await mysql.createConnection(dbConfig);
+    const [result] = await connection.execute(
+      'DELETE FROM shopping_list WHERE shopping_list_id = ? AND mail = ?',
+      [id, email]
+    );
+    await connection.end();
+
+    if (result.affectedRows > 0) {
+      res.json({ deletedId: id });
+    } else {
+      res.status(404).json({ error: 'Item not found' });
+    }
+  } catch (err) {
+    console.error('Error deleting item:', err);
+    res.status(500).json({ error: err.message });
   }
 });
 

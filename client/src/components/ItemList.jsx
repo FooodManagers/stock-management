@@ -143,7 +143,7 @@ const ItemList = ({ stocks, fetchStocks }) => {
   return (
     <div>
       {items.map((stock) => (
-        <div key={stock.stock_id}>
+        <div key={stock.stock_id} className='mx-2'>
           <Card className='shadow bg-default-100' onPress={() => {console.log('pressed')}}>
             <CardBody>
                 <div key={stock.stock_id}>

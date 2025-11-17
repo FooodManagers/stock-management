@@ -8,7 +8,8 @@ router.post('/', async (req, res) => {
     console.log("jancodefinish0");
     const data = req.body.data;
     console.log("data=", data);
-    const url = `https://api.jancodelookup.com/?appId=e4c2c84cc860d50e4df967f1535645f3&query=${data}`;
+    const JANCODE_APP_ID = process.env.JANCODE_APP_ID
+    const url = `https://api.jancodelookup.com/?appId=${JANCODE_APP_ID}&query=${data}`;
     console.log("テスト前");
     try {
         const response = await fetch(url);

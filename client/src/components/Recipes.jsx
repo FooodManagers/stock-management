@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Spacer} from "@heroui/react";
 import { Input, Button} from "@heroui/react";
-import { use } from "react";
 
 export const Recipes = () => {
   const [keyword, setKeyword] = useState('');
@@ -80,7 +79,7 @@ export const Recipes = () => {
   return (
     <div style={{ position: 'relative', minHeight: '100vh' }}>
       <Spacer y={3} />
-      <h1 className='text-lg font-bold'>レシピ検索</h1>
+      <h1 className='text-lg font-bold ml-3'>レシピ検索</h1>
       <Divider className='my-4' />
       <div className='flex w-full mx-auto md:flex-nowrap gap-4'>
         <Input
@@ -96,12 +95,12 @@ export const Recipes = () => {
       <Spacer y={4} />
       {error && <p>{error}</p>}
         {recipes.map((recipe) => (
-          <div key={recipe.recipeId}>
-          <Card className="py-4 ">
+          <div key={recipe.recipeId} className='mx-2'>
+          <Card className="p-4">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <h4 className="font-bold text-large">{recipe.recipeTitle}</h4>
             </CardHeader>
-            <CardBody className="overflow-visible py-2">
+            <CardBody className="overflow-visible py-2 items-center">
               <Image
                 alt="Card background"
                 className="object-cover rounded-xl flex justify-center items-center"
