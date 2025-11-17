@@ -80,7 +80,7 @@ export const List = () => {
   return (
     <div>
       <Spacer y={3} />
-      <h1 className="text-lg font-bold">買い物リスト</h1>
+      <h1 className="text-lg font-bold ml-3">買い物リスト</h1>
       <Divider className="my-4" />
 
       <div className="flex w-full mx-auto md:flex-nowrap gap-4">
@@ -104,7 +104,7 @@ export const List = () => {
       <Spacer y={4} />
 
       {items.map((item) => (
-        <div key={item.shopping_list_id} className="m-3">
+        <div key={item.shopping_list_id} className="mx-2">
           <Card>
             <div className="flex justify-between items-center mx-2">
               <Checkbox
