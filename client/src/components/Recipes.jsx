@@ -95,12 +95,12 @@ export const Recipes = () => {
       <Spacer y={4} />
       {error && <p>{error}</p>}
         {recipes.map((recipe) => (
-          <div key={recipe.recipeId}>
-          <Card className="py-4 ">
+          <div key={recipe.recipeId} className='mx-2'>
+          <Card className="p-4">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <h4 className="font-bold text-large">{recipe.recipeTitle}</h4>
             </CardHeader>
-            <CardBody className="overflow-visible py-2">
+            <CardBody className="overflow-visible py-2 items-center">
               <Image
                 alt="Card background"
                 className="object-cover rounded-xl flex justify-center items-center"
