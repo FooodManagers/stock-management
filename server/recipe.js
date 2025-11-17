@@ -6,7 +6,7 @@ const router = express.Router();
 
 const RAKUTEN_RECIPE_API_URL = process.env.RAKUTEN_RECIPE_API_URL;
 const RAKUTEN_RECIPE_SEARCH_API_URL = process.env.RAKUTEN_RECIPE_SEARCH_API_URL;
-const RAKUTEN_APP_ID = process.env.RAKUTEN_APP_ID; // .envファイルにAPIキーを保存
+const RAKUTEN_APP_ID = process.env.RAKUTEN_APP_ID;
 
 router.get('/', (req, res) => {
   res.send('Hello from the recipe router!');
