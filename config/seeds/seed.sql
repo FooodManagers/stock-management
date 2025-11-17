@@ -77,6 +77,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (4902102072618,'コカ・コーラ 2008 500ML PET','https://image.jancodelookup.com/4902102072618.jpg','コカ・コーラ','日本コカ・コーラ株式会社'),(4902555264875,'不二家 アンパンマンペロペロチョコ 1本','https://image.jancodelookup.com/4902555264875.jpg','不二家','株式会社不二家'),(4902750905450,'ぷっちょ ストロングソーダ スティック(10粒入)','https://image.jancodelookup.com/4902750905450.jpg','UHA味覚糖','ユーハ味覚糖株式会社'),(4902750905498,'ぷっちょ ストロングコーラ スティック(10粒入)','https://image.jancodelookup.com/4902750905498.jpg','UHA味覚糖','ユーハ味覚糖株式会社'),(4903333219636,'ロッテ トッポ 2袋','https://image.jancodelookup.com/4903333219636.jpg','ロッテ','株式会社ロッテ'),(4904230074250,'アサヒ スタイルバランスヨーグルトサワーテイストノンアル缶 350ml','https://image.jancodelookup.com/4904230074250.jpg','アサヒ','アサヒビール株式会社'),(4967576492973,'アイリスオーヤマ アイリスの天然水 富士山の天然水 500ml','https://image.jancodelookup.com/4967576492973.jpg','アイリスオーヤマ','アイリスオーヤマ株式会社'),(4987910003092,'ダイドー TAアリナミン メディカルバランス ソーダ風味 100ml','https://image.jancodelookup.com/4987910003092.jpg','ダイドー','アリナミン製薬株式会社'),(4987973121580,'コルゲンコーワ滋養チャージ 100ml','https://image.jancodelookup.com/4987973121580.jpg','コルゲンコーワ','興和株式会社');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +142,7 @@ CREATE TABLE `stock` (
 
 LOCK TABLES `stock` WRITE;
 /*!40000 ALTER TABLE `stock` DISABLE KEYS */;
-INSERT INTO `stock` VALUES (1,NULL,'豆腐','2025-02-06','賞味期限','2025-01-02','豆腐','test@trident.ac.jp',1,0),(2,NULL,'キャベツ','2025-01-31','賞味期限','2025-01-02','キャベツ','test@trident.ac.jp',1,0),(3,NULL,'天然水','2025-11-18','賞味期限','2025-11-16','','test@trident.ac.jp',1,0);
+INSERT INTO `stock` VALUES (1,NULL,'豆腐','2025-01-31','賞味期限','2025-01-02','豆腐','test@trident.ac.jp',2,0),(2,NULL,'キャベツ','2025-01-31','賞味期限','2025-01-02','キャベツ','test@trident.ac.jp',1,0),(3,NULL,'鶏肉','2025-01-20','賞味期限','2025-01-02','鶏肉','test@trident.ac.jp',1,1),(4,NULL,'うどん','2025-01-31','賞味期限','2025-01-02','うどん','test@trident.ac.jp',1,1),(5,NULL,'豚肉','1990-01-01','なし','2025-01-07','豚肉',NULL,1,0),(8,NULL,'ソース','2025-01-21','賞味期限','2025-01-07','ソース','test@trident.ac.jp',2,0),(10,NULL,NULL,'2025-07-01','賞味期限','2025-01-16','',NULL,1,0),(13,4903333219636,'ロッテ トッポ 1袋','2025-09-05','賞味期限','2025-01-17','','test@trident.ac.jp',3,0),(23,4902102072618,'コカ・コーラ 2008 500ML PET','2025-04-04','賞味期限','2025-01-22','','test@trident.ac.jp',2,0);
 /*!40000 ALTER TABLE `stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +166,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('test@example.com','$2a$10$3NsjKTw2vjZsHvNhTviAo..3tSoe/3fbtNqes07orXgG9QVsbmQ12'),('test@trident.ac.jp','$2b$10$0vp9Kbvt5penCizqoFjef.9dT0A371QvuRPORldMqe2bPHGBQ89sW'),('test2@example.com','$2a$10$bsAHIJwQ1j2.C8OJcoG.7.Yl61AvBjyuDBqV3WaGECK7SoFjgzwQ.');
+INSERT INTO `users` VALUES ('test@trident.ac.jp','$2b$10$0vp9Kbvt5penCizqoFjef.9dT0A371QvuRPORldMqe2bPHGBQ89sW'),('test2@trident.ac.jp','$2b$10$tM5ENRL1lNfQv0fT.U9NsOD63tw33PZdhhM926EjWa1gF.jD1zgLm');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
