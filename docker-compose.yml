@@ -11,6 +11,11 @@ services:
       DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
       DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      RAKUTEN_RECIPE_API_URL: ${RAKUTEN_RECIPE_API_URL}
+      RAKUTEN_RECIPE_SEARCH_API_URL: ${RAKUTEN_RECIPE_SEARCH_API_URL}
+      RAKUTEN_APP_ID: ${RAKUTEN_APP_ID}
+      JANCODE_APP_ID: ${JANCODE_APP_ID}
     depends_on:
       mysql:
         condition: service_healthy
